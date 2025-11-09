@@ -37,12 +37,15 @@ def calculate_kpi(users_data):
 
         # プレイ回数とスコア
         results = user_data.get('results', {})
-        total_plays += len(results)
+        if isinstance(results, dict):
+            total_plays += len(results)
 
-        for result_id, result_data in results.items():
-            score = result_data.get('score')
-            if score is not None:
-                all_scores.append(score)
+            for result_id, result_data in results.items():
+                # result_dataが辞書であることを確認
+                if isinstance(result_data, dict):
+                    score = result_data.get('score')
+                    if score is not None:
+                        all_scores.append(score)
 
     average_score = sum(all_scores) / len(all_scores) if all_scores else 0
 
@@ -84,10 +87,12 @@ def calculate_character_distribution(users_data):
 
     for user_id, user_data in users_data.items():
         results = user_data.get('results', {})
-        for result_id, result_data in results.items():
-            character = result_data.get('character')
-            if character:
-                character_counter[character] += 1
+        if isinstance(results, dict):
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    character = result_data.get('character')
+                    if character:
+                        character_counter[character] += 1
 
     return dict(character_counter)
 
@@ -98,10 +103,12 @@ def calculate_difficulty_distribution(users_data):
 
     for user_id, user_data in users_data.items():
         results = user_data.get('results', {})
-        for result_id, result_data in results.items():
-            difficulty = result_data.get('difficulty')
-            if difficulty:
-                difficulty_counter[difficulty] += 1
+        if isinstance(results, dict):
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    difficulty = result_data.get('difficulty')
+                    if difficulty:
+                        difficulty_counter[difficulty] += 1
 
     return dict(difficulty_counter)
 
@@ -112,10 +119,12 @@ def calculate_clear_rank_distribution(users_data):
 
     for user_id, user_data in users_data.items():
         results = user_data.get('results', {})
-        for result_id, result_data in results.items():
-            rank = result_data.get('clearRank')
-            if rank:
-                rank_counter[rank] += 1
+        if isinstance(results, dict):
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    rank = result_data.get('clearRank')
+                    if rank:
+                        rank_counter[rank] += 1
 
     return dict(rank_counter)
 
@@ -166,17 +175,19 @@ def get_recent_plays(users_data, limit=10):
 
     for user_id, user_data in users_data.items():
         results = user_data.get('results', {})
-        for result_id, result_data in results.items():
-            # タイムスタンプを抽出（result_idの最初の部分）
-            timestamp_part = result_id.split('_')[0]
-            all_plays.append({
-                'timestamp': timestamp_part,
-                'character': result_data.get('character', 'Unknown'),
-                'difficulty': result_data.get('difficulty', 'Unknown'),
-                'score': result_data.get('score', 0),
-                'clearRank': result_data.get('clearRank', '-'),
-                'clearType': result_data.get('clearType', 'Unknown')
-            })
+        if isinstance(results, dict):
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    # タイムスタンプを抽出（result_idの最初の部分）
+                    timestamp_part = result_id.split('_')[0]
+                    all_plays.append({
+                        'timestamp': timestamp_part,
+                        'character': result_data.get('character', 'Unknown'),
+                        'difficulty': result_data.get('difficulty', 'Unknown'),
+                        'score': result_data.get('score', 0),
+                        'clearRank': result_data.get('clearRank', '-'),
+                        'clearType': result_data.get('clearType', 'Unknown')
+                    })
 
     # タイムスタンプでソート（降順）
     sorted_plays = sorted(all_plays, key=lambda x: x['timestamp'], reverse=True)
