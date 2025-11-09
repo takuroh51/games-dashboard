@@ -7,7 +7,7 @@ export interface DashboardData {
   clearRankDistribution: Record<string, number>;
   languageDistribution: Record<string, number>;
   cutsceneSkipRate: CutsceneSkipRate;
-  excludedDataStats: ExcludedDataStats;
+  excludedDataStats?: ExcludedDataStats;
   recentPlays: RecentPlay[];
 }
 

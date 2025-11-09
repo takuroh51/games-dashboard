@@ -119,9 +119,11 @@ export default function Home() {
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                 カットシーンスキップ率: {data.cutsceneSkipRate.skipRate}%
               </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                除外データ: {data.excludedDataStats.excludedCount.toLocaleString()}件 ({data.excludedDataStats.excludedRate}%)
-              </span>
+              {data.excludedDataStats && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                  除外データ: {data.excludedDataStats.excludedCount.toLocaleString()}件 ({data.excludedDataStats.excludedRate}%)
+                </span>
+              )}
             </div>
           </div>
 
