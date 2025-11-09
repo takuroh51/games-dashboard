@@ -88,15 +88,9 @@ export default function Home() {
   }
 
   // UTC時刻を日本時間（UTC+9）に変換して表示
-  const lastUpdated = new Date(data.lastUpdated).toLocaleString('ja-JP', {
-    timeZone: 'Asia/Tokyo',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  })
+  const utcDate = new Date(data.lastUpdated)
+  const jstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000)
+  const lastUpdated = jstDate.toLocaleString('ja-JP').replace(/\//g, '/').replace(/\s/g, ' ')
 
   return (
     <>
