@@ -10,6 +10,26 @@ from datetime import datetime
 from collections import defaultdict, Counter
 
 
+def convert_buddhist_era_to_christian_era(date_string):
+    """
+    タイ仏暦（Buddhist Era）を西暦（Christian Era）に変換
+    2568年 → 2025年 (2568 - 543 = 2025)
+    """
+    try:
+        parts = date_string.split('-')
+        year = int(parts[0])
+
+        # 2500年以上の年は仏暦と判断して変換
+        if year >= 2500:
+            year = year - 543
+            parts[0] = str(year)
+            return '-'.join(parts)
+
+        return date_string
+    except:
+        return date_string
+
+
 def load_raw_data(input_path='public/data/raw_data.json'):
     """生データを読み込み"""
     if not os.path.exists(input_path):
@@ -72,6 +92,12 @@ def calculate_daily_active_users(users_data):
                 # タイムスタンプから日付を抽出（YYYY-MM-DD-HH-MM-SS-MS形式）
                 try:
                     date_part = '-'.join(timestamp_key.split('-')[:3])  # YYYY-MM-DD
+                    year = int(timestamp_key.split('-')[0])
+
+                    # 異常な年を除外（2025年のみ許可）
+                    if year != 2025:
+                        continue
+
                     daily_activity[date_part].add(user_id)
                 except:
                     continue
@@ -184,6 +210,15 @@ def get_recent_plays(users_data, limit=10):
                 if isinstance(result_data, dict):
                     # タイムスタンプを抽出（result_idの最初の部分）
                     timestamp_part = result_id.split('_')[0]
+
+                    # 異常な年を除外（2025年のみ許可）
+                    try:
+                        year = int(timestamp_part.split('-')[0])
+                        if year != 2025:
+                            continue
+                    except:
+                        continue
+
                     all_plays.append({
                         'timestamp': timestamp_part,
                         'character': result_data.get('character', 'Unknown'),
