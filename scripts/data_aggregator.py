@@ -1,0 +1,251 @@
+#!/usr/bin/env python3
+"""
+Data Aggregator
+Firebaseから取得した生データを集計してダッシュボード用JSONを生成
+"""
+
+import json
+import os
+from datetime import datetime
+from collections import defaultdict, Counter
+
+
+def load_raw_data(input_path='public/data/raw_data.json'):
+    """生データを読み込み"""
+    if not os.path.exists(input_path):
+        print(f"Error: {input_path} not found")
+        return None
+
+    with open(input_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    print(f"✅ Loaded raw data from {input_path}")
+    return data
+
+
+def calculate_kpi(users_data):
+    """KPI（総ユーザー数、総起動回数、総プレイ回数、平均スコア）を計算"""
+    total_users = len(users_data)
+    total_launches = 0
+    total_plays = 0
+    all_scores = []
+
+    for user_id, user_data in users_data.items():
+        # 起動回数
+        launch_count = user_data.get('launch_count', 0)
+        total_launches += launch_count
+
+        # プレイ回数とスコア
+        results = user_data.get('results', {})
+        total_plays += len(results)
+
+        for result_id, result_data in results.items():
+            score = result_data.get('score')
+            if score is not None:
+                all_scores.append(score)
+
+    average_score = sum(all_scores) / len(all_scores) if all_scores else 0
+
+    return {
+        'totalUsers': total_users,
+        'totalLaunches': total_launches,
+        'totalPlays': total_plays,
+        'averageScore': round(average_score, 2)
+    }
+
+
+def calculate_daily_active_users(users_data):
+    """日別アクティブユーザー数を計算"""
+    daily_activity = defaultdict(set)
+
+    for user_id, user_data in users_data.items():
+        timestamps = user_data.get('timeStamp', {})
+        for timestamp_key, event_type in timestamps.items():
+            if event_type == 'launch':
+                # タイムスタンプから日付を抽出（YYYY-MM-DD-HH-MM-SS-MS形式）
+                try:
+                    date_part = '-'.join(timestamp_key.split('-')[:3])  # YYYY-MM-DD
+                    daily_activity[date_part].add(user_id)
+                except:
+                    continue
+
+    # 日付順にソート
+    sorted_daily = sorted(
+        [{'date': date, 'users': len(users)} for date, users in daily_activity.items()],
+        key=lambda x: x['date']
+    )
+
+    return sorted_daily
+
+
+def calculate_character_distribution(users_data):
+    """キャラクター別プレイ回数を集計"""
+    character_counter = Counter()
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        for result_id, result_data in results.items():
+            character = result_data.get('character')
+            if character:
+                character_counter[character] += 1
+
+    return dict(character_counter)
+
+
+def calculate_difficulty_distribution(users_data):
+    """難易度別プレイ回数を集計"""
+    difficulty_counter = Counter()
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        for result_id, result_data in results.items():
+            difficulty = result_data.get('difficulty')
+            if difficulty:
+                difficulty_counter[difficulty] += 1
+
+    return dict(difficulty_counter)
+
+
+def calculate_clear_rank_distribution(users_data):
+    """クリアランク分布を集計"""
+    rank_counter = Counter()
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        for result_id, result_data in results.items():
+            rank = result_data.get('clearRank')
+            if rank:
+                rank_counter[rank] += 1
+
+    return dict(rank_counter)
+
+
+def calculate_language_distribution(users_data):
+    """言語分布を集計（最新の設定言語を使用）"""
+    language_counter = Counter()
+
+    for user_id, user_data in users_data.items():
+        options = user_data.get('option', {})
+        if options:
+            # 最新のオプション設定を取得
+            latest_option_key = sorted(options.keys())[-1] if options else None
+            if latest_option_key:
+                latest_option = options[latest_option_key]
+                language = latest_option.get('settingLanguage')
+                if language:
+                    language_counter[language] += 1
+
+    return dict(language_counter)
+
+
+def calculate_cutscene_skip_rate(users_data):
+    """カットシーンスキップ率を計算"""
+    cutscene_start = 0
+    cutscene_skip = 0
+
+    for user_id, user_data in users_data.items():
+        timestamps = user_data.get('timeStamp', {})
+        for timestamp_key, event_type in timestamps.items():
+            if 'CutScene_Op_Start' in str(event_type):
+                cutscene_start += 1
+            elif 'CutScene_Op_Skip' in str(event_type):
+                cutscene_skip += 1
+
+    skip_rate = (cutscene_skip / cutscene_start * 100) if cutscene_start > 0 else 0
+
+    return {
+        'totalStart': cutscene_start,
+        'totalSkip': cutscene_skip,
+        'skipRate': round(skip_rate, 2)
+    }
+
+
+def get_recent_plays(users_data, limit=10):
+    """最近のプレイ記録を取得"""
+    all_plays = []
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        for result_id, result_data in results.items():
+            # タイムスタンプを抽出（result_idの最初の部分）
+            timestamp_part = result_id.split('_')[0]
+            all_plays.append({
+                'timestamp': timestamp_part,
+                'character': result_data.get('character', 'Unknown'),
+                'difficulty': result_data.get('difficulty', 'Unknown'),
+                'score': result_data.get('score', 0),
+                'clearRank': result_data.get('clearRank', '-'),
+                'clearType': result_data.get('clearType', 'Unknown')
+            })
+
+    # タイムスタンプでソート（降順）
+    sorted_plays = sorted(all_plays, key=lambda x: x['timestamp'], reverse=True)
+
+    return sorted_plays[:limit]
+
+
+def aggregate_dashboard_data(users_data):
+    """全ての集計を実行してダッシュボード用データを生成"""
+    print("=" * 60)
+    print("Aggregating dashboard data...")
+    print("=" * 60)
+
+    dashboard_data = {
+        'lastUpdated': datetime.now().isoformat(),
+        'kpi': calculate_kpi(users_data),
+        'dailyActiveUsers': calculate_daily_active_users(users_data),
+        'characterDistribution': calculate_character_distribution(users_data),
+        'difficultyDistribution': calculate_difficulty_distribution(users_data),
+        'clearRankDistribution': calculate_clear_rank_distribution(users_data),
+        'languageDistribution': calculate_language_distribution(users_data),
+        'cutsceneSkipRate': calculate_cutscene_skip_rate(users_data),
+        'recentPlays': get_recent_plays(users_data)
+    }
+
+    print("✅ KPI calculated")
+    print("✅ Daily active users calculated")
+    print("✅ Character distribution calculated")
+    print("✅ Difficulty distribution calculated")
+    print("✅ Clear rank distribution calculated")
+    print("✅ Language distribution calculated")
+    print("✅ Cutscene skip rate calculated")
+    print("✅ Recent plays extracted")
+
+    return dashboard_data
+
+
+def save_dashboard_data(data, output_path='public/data/dashboard.json'):
+    """ダッシュボード用データをJSONファイルに保存"""
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+    print(f"✅ Dashboard data saved to {output_path}")
+
+
+def main():
+    """メイン処理"""
+    print("=" * 60)
+    print("Data Aggregator")
+    print(f"Started at: {datetime.now().isoformat()}")
+    print("=" * 60)
+
+    # 生データ読み込み
+    users_data = load_raw_data()
+    if not users_data:
+        return
+
+    # データ集計
+    dashboard_data = aggregate_dashboard_data(users_data)
+
+    # 保存
+    save_dashboard_data(dashboard_data)
+
+    print("=" * 60)
+    print("✅ Aggregation completed successfully")
+    print("=" * 60)
+
+
+if __name__ == '__main__':
+    main()

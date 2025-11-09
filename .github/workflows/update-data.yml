@@ -1,0 +1,47 @@
+name: Update Dashboard Data
+
+on:
+  # 1時間ごとに実行
+  schedule:
+    - cron: '0 * * * *'
+
+  # 手動実行も可能
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r scripts/requirements.txt
+
+      - name: Fetch Firebase data
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+        run: |
+          python scripts/firebase_collector.py
+
+      - name: Aggregate data
+        run: |
+          python scripts/data_aggregator.py
+
+      - name: Commit and push if changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/data/*.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update dashboard data [automated]" && git push)
