@@ -3,16 +3,26 @@ import Head from 'next/head'
 import KPICards from '@/components/KPICards'
 import ChartsPanel from '@/components/ChartsPanel'
 import RecentPlaysTable from '@/components/RecentPlaysTable'
+import LoginForm from '@/components/LoginForm'
+import { isAuthenticated, logout } from '@/utils/auth'
 import type { DashboardData } from '@/types/dashboard'
 
 export default function Home() {
+  const [authenticated, setAuthenticated] = useState(false)
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetchDashboardData()
+    // 認証チェック
+    setAuthenticated(isAuthenticated())
   }, [])
+
+  useEffect(() => {
+    if (authenticated) {
+      fetchDashboardData()
+    }
+  }, [authenticated])
 
   async function fetchDashboardData() {
     try {
@@ -33,6 +43,21 @@ export default function Home() {
     } finally {
       setLoading(false)
     }
+  }
+
+  function handleLogin() {
+    setAuthenticated(true)
+  }
+
+  function handleLogout() {
+    logout()
+    setAuthenticated(false)
+    setData(null)
+  }
+
+  // 未認証の場合はログインフォームを表示
+  if (!authenticated) {
+    return <LoginForm onLogin={handleLogin} />
   }
 
   if (loading) {
@@ -76,9 +101,17 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-              SKOOTA GAMES Dashboard
-            </h1>
+            <div className="flex items-center justify-between mb-2">
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+                SKOOTA GAMES Dashboard
+              </h1>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                ログアウト
+              </button>
+            </div>
             <p className="text-gray-600 dark:text-gray-400">
               最終更新: {lastUpdated}
             </p>
