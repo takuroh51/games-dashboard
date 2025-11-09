@@ -45,7 +45,11 @@ def calculate_kpi(users_data):
                 if isinstance(result_data, dict):
                     score = result_data.get('score')
                     if score is not None:
-                        all_scores.append(score)
+                        try:
+                            # スコアを数値に変換
+                            all_scores.append(float(score))
+                        except (ValueError, TypeError):
+                            pass  # 変換できない場合はスキップ
 
     average_score = sum(all_scores) / len(all_scores) if all_scores else 0
 
