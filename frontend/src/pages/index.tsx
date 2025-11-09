@@ -29,7 +29,9 @@ export default function Home() {
       setLoading(true)
       // GitHub Pagesの場合はbasePathを考慮
       const basePath = process.env.NODE_ENV === 'production' ? '/games-dashboard' : ''
-      const response = await fetch(`${basePath}/data/dashboard.json`)
+      // キャッシュバスティング: タイムスタンプを追加して常に最新データを取得
+      const cacheBuster = `?t=${Date.now()}`
+      const response = await fetch(`${basePath}/data/dashboard.json${cacheBuster}`)
 
       if (!response.ok) {
         throw new Error('Failed to fetch dashboard data')
@@ -37,6 +39,7 @@ export default function Home() {
 
       const jsonData: DashboardData = await response.json()
       setData(jsonData)
+      setError(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
       console.error('Error fetching dashboard data:', err)
@@ -115,9 +118,17 @@ export default function Home() {
                 ログアウト
               </button>
             </div>
-            <p className="text-gray-600 dark:text-gray-400">
-              最終更新: {lastUpdated}
-            </p>
+            <div className="flex items-center gap-3">
+              <p className="text-gray-600 dark:text-gray-400">
+                最終更新: {lastUpdated}
+              </p>
+              <button
+                onClick={fetchDashboardData}
+                className="px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 border border-blue-300 dark:border-blue-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+              >
+                更新
+              </button>
+            </div>
             <div className="mt-4 flex flex-wrap gap-3">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                 カットシーンスキップ率: {data.cutsceneSkipRate.skipRate}%
