@@ -12,6 +12,7 @@ export default function Home() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [updateMessage, setUpdateMessage] = useState<string | null>(null)
 
   useEffect(() => {
     // 認証チェック
@@ -27,22 +28,39 @@ export default function Home() {
   async function fetchDashboardData() {
     try {
       setLoading(true)
+      setUpdateMessage(null)
       // GitHub Pagesの場合はbasePathを考慮
       const basePath = process.env.NODE_ENV === 'production' ? '/games-dashboard' : ''
       // キャッシュバスティング: タイムスタンプを追加して常に最新データを取得
       const cacheBuster = `?t=${Date.now()}`
-      const response = await fetch(`${basePath}/data/dashboard.json${cacheBuster}`)
+      const response = await fetch(`${basePath}/data/dashboard.json${cacheBuster}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
 
       if (!response.ok) {
         throw new Error('Failed to fetch dashboard data')
       }
 
       const jsonData: DashboardData = await response.json()
+      const oldTime = data?.lastUpdated
       setData(jsonData)
       setError(null)
+
+      // 更新完了メッセージを表示
+      if (oldTime && oldTime !== jsonData.lastUpdated) {
+        setUpdateMessage('✅ 新しいデータを取得しました')
+      } else {
+        setUpdateMessage('ℹ️ 最新のデータを確認しました（更新なし）')
+      }
+      setTimeout(() => setUpdateMessage(null), 3000)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
       console.error('Error fetching dashboard data:', err)
+      setUpdateMessage('❌ データ取得に失敗しました')
+      setTimeout(() => setUpdateMessage(null), 3000)
     } finally {
       setLoading(false)
     }
@@ -118,7 +136,7 @@ export default function Home() {
                 ログアウト
               </button>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               <p className="text-gray-600 dark:text-gray-400">
                 最終更新: {lastUpdated}
               </p>
@@ -135,6 +153,11 @@ export default function Home() {
                 )}
                 {loading ? '更新中...' : '更新'}
               </button>
+              {updateMessage && (
+                <span className="text-sm font-medium text-green-600 dark:text-green-400 animate-fade-in">
+                  {updateMessage}
+                </span>
+              )}
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
