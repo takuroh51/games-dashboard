@@ -45,3 +45,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add public/data/dashboard.json || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update dashboard data [automated]" && git push)
+
+      - name: Trigger deployment
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run deploy-pages.yml

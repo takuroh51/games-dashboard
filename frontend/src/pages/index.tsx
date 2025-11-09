@@ -87,7 +87,7 @@ export default function Home() {
     )
   }
 
-  const lastUpdated = new Date(data.lastUpdated).toLocaleString('ja-JP')
+  const lastUpdated = new Date(data.lastUpdated).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
 
   return (
     <>
