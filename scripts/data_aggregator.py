@@ -6,7 +6,7 @@ Firebaseから取得した生データを集計してダッシュボード用JSO
 
 import json
 import os
-from datetime import datetime
+from datetime import datetime, date
 from collections import defaultdict, Counter
 
 
@@ -41,6 +41,58 @@ def load_raw_data(input_path='public/data/raw_data.json'):
 
     print(f"✅ Loaded raw data from {input_path}")
     return data
+
+
+def calculate_excluded_data_stats(users_data):
+    """除外データ（異常年、未来日付）の統計を計算"""
+    total_count = 0
+    excluded_count = 0
+    today = date.today()
+
+    for user_id, user_data in users_data.items():
+        # timestampから集計
+        timestamps = user_data.get('timeStamp', {})
+        for timestamp_key in timestamps.keys():
+            total_count += 1
+            try:
+                year = int(timestamp_key.split('-')[0])
+                date_part = '-'.join(timestamp_key.split('-')[:3])
+
+                # 2025年でない、または未来の日付の場合は除外
+                if year != 2025:
+                    excluded_count += 1
+                else:
+                    date_obj = datetime.strptime(date_part, '%Y-%m-%d').date()
+                    if date_obj > today:
+                        excluded_count += 1
+            except:
+                excluded_count += 1
+
+        # resultsから集計
+        results = user_data.get('results', {})
+        if isinstance(results, dict):
+            for result_id in results.keys():
+                total_count += 1
+                try:
+                    year = int(result_id.split('-')[0])
+                    date_part = '-'.join(result_id.split('-')[:3])
+
+                    if year != 2025:
+                        excluded_count += 1
+                    else:
+                        date_obj = datetime.strptime(date_part, '%Y-%m-%d').date()
+                        if date_obj > today:
+                            excluded_count += 1
+                except:
+                    excluded_count += 1
+
+    excluded_rate = (excluded_count / total_count * 100) if total_count > 0 else 0
+
+    return {
+        'totalCount': total_count,
+        'excludedCount': excluded_count,
+        'excludedRate': round(excluded_rate, 2)
+    }
 
 
 def calculate_kpi(users_data):
@@ -84,6 +136,7 @@ def calculate_kpi(users_data):
 def calculate_daily_active_users(users_data):
     """日別アクティブユーザー数を計算"""
     daily_activity = defaultdict(set)
+    today = date.today()
 
     for user_id, user_data in users_data.items():
         timestamps = user_data.get('timeStamp', {})
@@ -96,6 +149,11 @@ def calculate_daily_active_users(users_data):
 
                     # 異常な年を除外（2025年のみ許可）
                     if year != 2025:
+                        continue
+
+                    # 未来の日付を除外
+                    date_obj = datetime.strptime(date_part, '%Y-%m-%d').date()
+                    if date_obj > today:
                         continue
 
                     daily_activity[date_part].add(user_id)
@@ -202,6 +260,7 @@ def calculate_cutscene_skip_rate(users_data):
 def get_recent_plays(users_data, limit=10):
     """最近のプレイ記録を取得"""
     all_plays = []
+    today = date.today()
 
     for user_id, user_data in users_data.items():
         results = user_data.get('results', {})
@@ -215,6 +274,12 @@ def get_recent_plays(users_data, limit=10):
                     try:
                         year = int(timestamp_part.split('-')[0])
                         if year != 2025:
+                            continue
+
+                        # 未来の日付を除外
+                        date_part = '-'.join(timestamp_part.split('-')[:3])
+                        date_obj = datetime.strptime(date_part, '%Y-%m-%d').date()
+                        if date_obj > today:
                             continue
                     except:
                         continue
@@ -249,6 +314,7 @@ def aggregate_dashboard_data(users_data):
         'clearRankDistribution': calculate_clear_rank_distribution(users_data),
         'languageDistribution': calculate_language_distribution(users_data),
         'cutsceneSkipRate': calculate_cutscene_skip_rate(users_data),
+        'excludedDataStats': calculate_excluded_data_stats(users_data),
         'recentPlays': get_recent_plays(users_data)
     }
 
@@ -259,6 +325,7 @@ def aggregate_dashboard_data(users_data):
     print("✅ Clear rank distribution calculated")
     print("✅ Language distribution calculated")
     print("✅ Cutscene skip rate calculated")
+    print("✅ Excluded data stats calculated")
     print("✅ Recent plays extracted")
 
     return dashboard_data

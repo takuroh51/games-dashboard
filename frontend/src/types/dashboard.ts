@@ -7,6 +7,7 @@ export interface DashboardData {
   clearRankDistribution: Record<string, number>;
   languageDistribution: Record<string, number>;
   cutsceneSkipRate: CutsceneSkipRate;
+  excludedDataStats: ExcludedDataStats;
   recentPlays: RecentPlay[];
 }
 
@@ -26,6 +27,12 @@ export interface CutsceneSkipRate {
   totalStart: number;
   totalSkip: number;
   skipRate: number;
+}
+
+export interface ExcludedDataStats {
+  totalCount: number;
+  excludedCount: number;
+  excludedRate: number;
 }
 
 export interface RecentPlay {
