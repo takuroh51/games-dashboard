@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-10T16:15:13.744993",
+  "lastUpdated": "2025-11-10T17:11:21.975987",
   "kpi": {
-    "totalUsers": 4433,
-    "totalLaunches": 9941,
-    "totalPlays": 29624,
-    "averageScore": 58474.17
+    "totalUsers": 4435,
+    "totalLaunches": 9943,
+    "totalPlays": 29626,
+    "averageScore": 58471.15
   },
   "dailyActiveUsers": [
     {
@@ -113,47 +113,63 @@
     },
     {
       "date": "2025-11-10",
-      "users": 27
+      "users": 29
     }
   ],
   "characterDistribution": {
-    "Daia": 12816,
+    "Daia": 12817,
     "Hikaru": 6262,
-    "Seika": 10543
+    "Seika": 10544
   },
   "difficultyDistribution": {
-    "Normal": 12953,
-    "Easy": 7005,
+    "Normal": 12954,
+    "Easy": 7006,
     "Hard": 9663
   },
   "clearRankDistribution": {
     "A": 10646,
     "D": 617,
     "MM": 3001,
-    "M": 5905,
+    "M": 5906,
     "MMM": 497,
     "B": 6220,
-    "C": 2723,
+    "C": 2724,
     "None": 12
   },
   "languageDistribution": {
     "en": 1277,
     "jp": 616,
     "zh-TW": 181,
-    "zh-CN": 758,
+    "zh-CN": 760,
     "ko": 203
   },
   "cutsceneSkipRate": {
-    "totalStart": 3962,
-    "totalSkip": 10920,
-    "skipRate": 275.62
+    "totalStart": 3964,
+    "totalSkip": 10933,
+    "skipRate": 275.81
   },
   "excludedDataStats": {
-    "totalCount": 201910,
+    "totalCount": 201951,
     "excludedCount": 524,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-10-17-02-09-493",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 11550,
+      "clearRank": "C",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-10-16-56-21-097",
+      "character": "Seika",
+      "difficulty": "Normal",
+      "score": 15950,
+      "clearRank": "M",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-10-16-00-27-616",
       "character": "Hikaru",
@@ -217,22 +233,6 @@
       "score": 25100,
       "clearRank": "MM",
       "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-10-15-14-16-975",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 26500,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-10-15-11-50-937",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 24000,
-      "clearRank": "B",
-      "clearType": "Failed"
     }
   ]
 }
