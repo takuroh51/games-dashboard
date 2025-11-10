@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-10T08:18:19.757605",
+  "lastUpdated": "2025-11-10T09:15:26.612849",
   "kpi": {
-    "totalUsers": 4422,
-    "totalLaunches": 9917,
-    "totalPlays": 29541,
-    "averageScore": 58563.48
+    "totalUsers": 4424,
+    "totalLaunches": 9921,
+    "totalPlays": 29547,
+    "averageScore": 58557.13
   },
   "dailyActiveUsers": [
     {
@@ -113,47 +113,95 @@
     },
     {
       "date": "2025-11-10",
-      "users": 10
+      "users": 13
     }
   ],
   "characterDistribution": {
-    "Daia": 12793,
-    "Hikaru": 6236,
-    "Seika": 10509
+    "Daia": 12797,
+    "Hikaru": 6237,
+    "Seika": 10510
   },
   "difficultyDistribution": {
-    "Normal": 12922,
+    "Normal": 12924,
     "Easy": 7001,
-    "Hard": 9615
+    "Hard": 9619
   },
   "clearRankDistribution": {
-    "A": 10617,
+    "A": 10618,
     "D": 617,
-    "MM": 2978,
-    "M": 5890,
+    "MM": 2981,
+    "M": 5891,
     "MMM": 497,
-    "B": 6207,
+    "B": 6208,
     "C": 2720,
     "None": 12
   },
   "languageDistribution": {
-    "en": 1275,
+    "en": 1277,
     "zh-TW": 181,
     "jp": 614,
-    "zh-CN": 753,
+    "zh-CN": 754,
     "ko": 203
   },
   "cutsceneSkipRate": {
-    "totalStart": 3954,
-    "totalSkip": 10906,
-    "skipRate": 275.82
+    "totalStart": 3956,
+    "totalSkip": 10913,
+    "skipRate": 275.86
   },
   "excludedDataStats": {
-    "totalCount": 201382,
+    "totalCount": 201440,
     "excludedCount": 524,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-10-09-15-20-742",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 19500,
+      "clearRank": "B",
+      "clearType": "Failed"
+    },
+    {
+      "timestamp": "2025-11-10-09-02-57-854",
+      "character": "Seika",
+      "difficulty": "Hard",
+      "score": 31250,
+      "clearRank": "M",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-10-09-02-07-711",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 26800,
+      "clearRank": "MM",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-10-08-57-42-569",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 30300,
+      "clearRank": "MM",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-10-08-47-35-134",
+      "character": "Hikaru",
+      "difficulty": "Hard",
+      "score": 31550,
+      "clearRank": "MM",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-10-08-40-53-046",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 24200,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-10-07-54-49-772",
       "character": "Daia",
@@ -185,54 +233,6 @@
       "score": 16850,
       "clearRank": "M",
       "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-10-03-14-31-645",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 20650,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-10-03-08-13-906",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 16650,
-      "clearRank": "MM",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-10-02-59-41-407",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 23050,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-10-02-55-31-277",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 26250,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-10-02-51-38-445",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 24500,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-10-02-47-30-115",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 15450,
-      "clearRank": "A",
-      "clearType": "Clear"
     }
   ]
 }
