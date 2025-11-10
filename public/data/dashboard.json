@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-10T20:14:26.956323",
+  "lastUpdated": "2025-11-10T21:10:55.704599",
   "kpi": {
     "totalUsers": 4439,
-    "totalLaunches": 9951,
-    "totalPlays": 29650,
-    "averageScore": 58441.43
+    "totalLaunches": 9952,
+    "totalPlays": 29652,
+    "averageScore": 58439.34
   },
   "dailyActiveUsers": [
     {
@@ -113,21 +113,21 @@
     },
     {
       "date": "2025-11-10",
-      "users": 36
+      "users": 37
     }
   ],
   "characterDistribution": {
-    "Daia": 12824,
+    "Daia": 12826,
     "Hikaru": 6269,
     "Seika": 10554
   },
   "difficultyDistribution": {
-    "Normal": 12962,
+    "Normal": 12963,
     "Easy": 7009,
-    "Hard": 9676
+    "Hard": 9677
   },
   "clearRankDistribution": {
-    "A": 10659,
+    "A": 10661,
     "D": 617,
     "MM": 3001,
     "M": 5911,
@@ -149,11 +149,27 @@
     "skipRate": 275.53
   },
   "excludedDataStats": {
-    "totalCount": 202117,
+    "totalCount": 202133,
     "excludedCount": 524,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-10-21-03-45-374",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 27050,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-10-20-34-42-092",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 27700,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-10-19-40-51-477",
       "character": "Seika",
@@ -217,22 +233,6 @@
       "score": 23000,
       "clearRank": "A",
       "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-10-19-08-13-899",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 26100,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-10-19-03-28-619",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 23050,
-      "clearRank": "B",
-      "clearType": "Failed"
     }
   ]
 }
