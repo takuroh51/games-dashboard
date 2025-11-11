@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-11T06:18:51.654706",
+  "lastUpdated": "2025-11-11T07:12:36.024314",
   "kpi": {
-    "totalUsers": 4450,
-    "totalLaunches": 9982,
-    "totalPlays": 29692,
-    "averageScore": 58390.42
+    "totalUsers": 4452,
+    "totalLaunches": 9992,
+    "totalPlays": 29694,
+    "averageScore": 58387.55
   },
   "dailyActiveUsers": [
     {
@@ -117,16 +117,16 @@
     },
     {
       "date": "2025-11-11",
-      "users": 10
+      "users": 12
     }
   ],
   "characterDistribution": {
     "Daia": 12841,
     "Hikaru": 6279,
-    "Seika": 10569
+    "Seika": 10571
   },
   "difficultyDistribution": {
-    "Normal": 12988,
+    "Normal": 12990,
     "Easy": 7011,
     "Hard": 9690
   },
@@ -136,28 +136,44 @@
     "MM": 3005,
     "M": 5915,
     "MMM": 497,
-    "B": 6239,
+    "B": 6241,
     "C": 2728,
     "None": 12
   },
   "languageDistribution": {
-    "en": 1280,
+    "en": 1281,
     "jp": 618,
     "zh-TW": 182,
     "zh-CN": 763,
     "ko": 203
   },
   "cutsceneSkipRate": {
-    "totalStart": 3976,
-    "totalSkip": 10963,
-    "skipRate": 275.73
+    "totalStart": 3978,
+    "totalSkip": 10977,
+    "skipRate": 275.94
   },
   "excludedDataStats": {
-    "totalCount": 202422,
+    "totalCount": 202467,
     "excludedCount": 524,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-11-07-06-33-182",
+      "character": "Seika",
+      "difficulty": "Normal",
+      "score": 17850,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-11-07-03-32-092",
+      "character": "Seika",
+      "difficulty": "Normal",
+      "score": 13800,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-11-05-39-47-294",
       "character": "Seika",
@@ -220,22 +236,6 @@
       "difficulty": "Normal",
       "score": 27550,
       "clearRank": "M",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-11-04-17-09-648",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 25150,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-11-04-13-12-007",
-      "character": "Daia",
-      "difficulty": "Hard",
-      "score": 33950,
-      "clearRank": "B",
       "clearType": "Clear"
     }
   ]
