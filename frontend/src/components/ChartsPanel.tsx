@@ -2,7 +2,7 @@
 
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js'
 import { Line, Pie, Bar } from 'react-chartjs-2'
-import type { DailyActiveUser, PlayerClearRateDistribution } from '@/types/dashboard'
+import type { DailyActiveUser, PlayerClearRateDistribution, PlayClearRateDistribution } from '@/types/dashboard'
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
 
@@ -13,6 +13,7 @@ interface ChartsPanelProps {
   clearRankDistribution: Record<string, number>
   languageDistribution: Record<string, number>
   playerClearRateDistribution?: PlayerClearRateDistribution
+  playClearRateDistribution?: PlayClearRateDistribution
 }
 
 export default function ChartsPanel({
@@ -21,7 +22,8 @@ export default function ChartsPanel({
   difficultyDistribution,
   clearRankDistribution,
   languageDistribution,
-  playerClearRateDistribution
+  playerClearRateDistribution,
+  playClearRateDistribution
 }: ChartsPanelProps) {
   // 日別アクティブユーザー数（折れ線グラフ）
   const dailyActiveUsersData = {
@@ -110,6 +112,20 @@ export default function ChartsPanel({
     ]
   } : null
 
+  // プレイ別クリアレート分布（横棒グラフ）
+  const playClearRateDistData = playClearRateDistribution ? {
+    labels: Object.keys(playClearRateDistribution.distribution),
+    datasets: [
+      {
+        label: 'プレイ回数',
+        data: Object.values(playClearRateDistribution.distribution),
+        backgroundColor: 'rgba(236, 72, 153, 0.8)', // Pink
+        borderColor: 'rgba(236, 72, 153, 1)',
+        borderWidth: 1
+      }
+    ]
+  } : null
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: true,
@@ -179,15 +195,45 @@ export default function ChartsPanel({
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                プレイヤークリアレート分布
+                プレイヤークリアレート分布（clearType）
               </h2>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 平均: {playerClearRateDistribution.stats.mean}% | 中央値: {playerClearRateDistribution.stats.median}%
               </div>
             </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+              プレイヤーごとの成功率（Clear/FullCombo/Perfectを成功とカウント）
+            </div>
             <div className="h-80">
               <Bar
                 data={clearRateDistData}
+                options={{
+                  ...chartOptions,
+                  maintainAspectRatio: false,
+                  indexAxis: 'y' // 横棒グラフ
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* プレイ別クリアレート分布 */}
+        {playClearRateDistData && playClearRateDistribution && (
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                プレイ別クリアレート分布（clearRate）
+              </h2>
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                平均: {playClearRateDistribution.stats.mean}% | 中央値: {playClearRateDistribution.stats.median}%
+              </div>
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+              各プレイでの楽曲達成率（0-100%）
+            </div>
+            <div className="h-80">
+              <Bar
+                data={playClearRateDistData}
                 options={{
                   ...chartOptions,
                   maintainAspectRatio: false,

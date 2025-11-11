@@ -11,6 +11,7 @@ export interface DashboardData {
   recentPlays: RecentPlay[];
   songPlaysByDifficulty: SongPlayByDifficulty[];
   playerClearRateDistribution?: PlayerClearRateDistribution;
+  playClearRateDistribution?: PlayClearRateDistribution;
 }
 
 export interface KPI {
@@ -60,5 +61,14 @@ export interface PlayerClearRateDistribution {
     mean: number;
     median: number;
     totalPlayers: number;
+  };
+}
+
+export interface PlayClearRateDistribution {
+  distribution: Record<string, number>;
+  stats: {
+    mean: number;
+    median: number;
+    totalPlays: number;
   };
 }

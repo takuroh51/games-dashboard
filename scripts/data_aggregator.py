@@ -365,7 +365,7 @@ def calculate_song_plays_by_difficulty(users_data):
 
 
 def calculate_player_clear_rate_distribution(users_data):
-    """プレイヤー別クリアレート分布を計算"""
+    """プレイヤー別クリアレート分布を計算（clearTypeベース）"""
     import statistics
 
     user_clear_rates = []
@@ -428,6 +428,68 @@ def calculate_player_clear_rate_distribution(users_data):
     }
 
 
+def calculate_play_clear_rate_distribution(users_data):
+    """プレイ別クリアレート分布を計算（clearRateフィールドベース）"""
+    import statistics
+
+    all_clear_rates = []
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        if isinstance(results, dict):
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    clear_rate = result_data.get('clearRate')
+                    # clearRateフィールドが存在する場合のみ集計
+                    if clear_rate is not None:
+                        try:
+                            rate_value = int(clear_rate)
+                            # 0-100の範囲内のみ有効
+                            if 0 <= rate_value <= 100:
+                                all_clear_rates.append(rate_value)
+                        except (ValueError, TypeError):
+                            pass  # 数値に変換できない場合はスキップ
+
+    # 7区分で集計
+    brackets = {
+        '0%': 0,
+        '1-19%': 0,
+        '20-39%': 0,
+        '40-59%': 0,
+        '60-79%': 0,
+        '80-99%': 0,
+        '100%': 0
+    }
+
+    for rate in all_clear_rates:
+        if rate == 0:
+            brackets['0%'] += 1
+        elif rate < 20:
+            brackets['1-19%'] += 1
+        elif rate < 40:
+            brackets['20-39%'] += 1
+        elif rate < 60:
+            brackets['40-59%'] += 1
+        elif rate < 80:
+            brackets['60-79%'] += 1
+        elif rate < 100:
+            brackets['80-99%'] += 1
+        else:
+            brackets['100%'] += 1
+
+    # 統計情報を計算
+    stats = {
+        'mean': round(statistics.mean(all_clear_rates), 2) if all_clear_rates else 0,
+        'median': round(statistics.median(all_clear_rates), 2) if all_clear_rates else 0,
+        'totalPlays': len(all_clear_rates)
+    }
+
+    return {
+        'distribution': brackets,
+        'stats': stats
+    }
+
+
 def aggregate_dashboard_data(users_data):
     """全ての集計を実行してダッシュボード用データを生成"""
     print("=" * 60)
@@ -446,7 +508,8 @@ def aggregate_dashboard_data(users_data):
         'excludedDataStats': calculate_excluded_data_stats(users_data),
         'recentPlays': get_recent_plays(users_data),
         'songPlaysByDifficulty': calculate_song_plays_by_difficulty(users_data),
-        'playerClearRateDistribution': calculate_player_clear_rate_distribution(users_data)
+        'playerClearRateDistribution': calculate_player_clear_rate_distribution(users_data),
+        'playClearRateDistribution': calculate_play_clear_rate_distribution(users_data)
     }
 
     print("✅ KPI calculated")
@@ -460,6 +523,7 @@ def aggregate_dashboard_data(users_data):
     print("✅ Recent plays extracted")
     print("✅ Song plays by difficulty calculated")
     print("✅ Player clear rate distribution calculated")
+    print("✅ Play clear rate distribution calculated")
 
     return dashboard_data
 
