@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-11T22:40:34.203873",
+  "lastUpdated": "2025-11-11T23:10:48.712620",
   "kpi": {
     "totalUsers": 4485,
-    "totalLaunches": 10087,
-    "totalPlays": 29913,
-    "averageScore": 58108.15
+    "totalLaunches": 10088,
+    "totalPlays": 29924,
+    "averageScore": 58096.15
   },
   "dailyActiveUsers": [
     {
@@ -121,23 +121,23 @@
     }
   ],
   "characterDistribution": {
-    "Daia": 12932,
+    "Daia": 12938,
     "Hikaru": 6331,
-    "Seika": 10647
+    "Seika": 10652
   },
   "difficultyDistribution": {
-    "Normal": 13065,
+    "Normal": 13071,
     "Easy": 7065,
-    "Hard": 9780
+    "Hard": 9785
   },
   "clearRankDistribution": {
-    "A": 10749,
+    "A": 10756,
     "D": 623,
     "MM": 3010,
-    "M": 5943,
+    "M": 5944,
     "MMM": 500,
-    "B": 6301,
-    "C": 2772,
+    "B": 6303,
+    "C": 2773,
     "None": 12
   },
   "languageDistribution": {
@@ -154,90 +154,90 @@
     "totalSkipButtonPresses": 11069
   },
   "excludedDataStats": {
-    "totalCount": 204120,
+    "totalCount": 204189,
     "excludedCount": 532,
     "excludedRate": 0.26
   },
   "recentPlays": [
     {
-      "timestamp": "2025-11-11-22-38-34-748",
+      "timestamp": "2025-11-11-23-08-07-457",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 22950,
+      "clearRank": "A",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-11-23-07-53-624",
       "character": "Seika",
-      "difficulty": "Hard",
-      "score": 22050,
-      "clearRank": "C",
-      "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-11-22-37-34-444",
-      "character": "Daia",
-      "difficulty": "Hard",
-      "score": 30800,
-      "clearRank": "B",
+      "difficulty": "Normal",
+      "score": 25400,
+      "clearRank": "A",
       "clearType": "Clear"
     },
     {
-      "timestamp": "2025-11-11-22-33-11-260",
+      "timestamp": "2025-11-11-23-03-58-456",
       "character": "Daia",
       "difficulty": "Normal",
-      "score": 16000,
+      "score": 28950,
       "clearRank": "M",
       "clearType": "FullCombo"
     },
     {
-      "timestamp": "2025-11-11-22-27-55-485",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 29300,
+      "timestamp": "2025-11-11-23-03-49-176",
+      "character": "Seika",
+      "difficulty": "Normal",
+      "score": 15300,
       "clearRank": "A",
-      "clearType": "FullCombo"
+      "clearType": "Clear"
     },
     {
-      "timestamp": "2025-11-11-22-24-32-895",
-      "character": "Hikaru",
+      "timestamp": "2025-11-11-23-00-19-646",
+      "character": "Seika",
       "difficulty": "Normal",
-      "score": 19450,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-11-22-10-49-521",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 17650,
+      "score": 17900,
       "clearRank": "B",
       "clearType": "Clear"
     },
     {
-      "timestamp": "2025-11-11-22-06-11-062",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 21750,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-11-22-03-44-389",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 20000,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-11-22-01-18-888",
+      "timestamp": "2025-11-11-22-52-31-915",
       "character": "Daia",
       "difficulty": "Hard",
-      "score": 23000,
+      "score": 33550,
       "clearRank": "A",
       "clearType": "Clear"
     },
     {
-      "timestamp": "2025-11-11-22-00-50-649",
-      "character": "Hikaru",
+      "timestamp": "2025-11-11-22-46-08-846",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 33550,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-11-22-43-41-045",
+      "character": "Seika",
       "difficulty": "Normal",
-      "score": 19150,
-      "clearRank": "M",
-      "clearType": "FullCombo"
+      "score": 13750,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-11-22-43-36-201",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 33400,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-11-22-41-07-846",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 33250,
+      "clearRank": "A",
+      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
@@ -251,9 +251,9 @@
     {
       "songId": "S01suyo",
       "easy": 521,
-      "normal": 1029,
+      "normal": 1030,
       "hard": 650,
-      "total": 2200
+      "total": 2201
     },
     {
       "songId": "D02krmi",
@@ -272,30 +272,30 @@
     {
       "songId": "D03trko",
       "easy": 370,
-      "normal": 767,
+      "normal": 768,
       "hard": 465,
-      "total": 1602
+      "total": 1603
     },
     {
       "songId": "S02arru",
       "easy": 287,
-      "normal": 792,
+      "normal": 793,
       "hard": 383,
-      "total": 1462
+      "total": 1463
     },
     {
       "songId": "D04angr",
       "easy": 333,
-      "normal": 768,
+      "normal": 769,
       "hard": 319,
-      "total": 1420
+      "total": 1421
     },
     {
       "songId": "S03unmi",
       "easy": 274,
-      "normal": 657,
+      "normal": 658,
       "hard": 429,
-      "total": 1360
+      "total": 1361
     },
     {
       "songId": "Music_Tutorial",
@@ -314,9 +314,9 @@
     {
       "songId": "S04haku",
       "easy": 281,
-      "normal": 690,
+      "normal": 691,
       "hard": 236,
-      "total": 1207
+      "total": 1208
     },
     {
       "songId": "H03gara",
@@ -349,16 +349,16 @@
   ],
   "playerClearRateDistribution": {
     "distribution": {
-      "0%": 527,
+      "0%": 526,
       "1-19%": 11,
       "20-39%": 148,
       "40-59%": 342,
-      "60-79%": 531,
+      "60-79%": 532,
       "80-99%": 738,
       "100%": 1191
     },
     "stats": {
-      "mean": 69.57,
+      "mean": 69.59,
       "median": 83.33,
       "totalPlayers": 3488
     }
@@ -369,14 +369,14 @@
       "1-19%": 33,
       "20-39%": 115,
       "40-59%": 990,
-      "60-79%": 8820,
-      "80-99%": 19817,
+      "60-79%": 8823,
+      "80-99%": 19825,
       "100%": 92
     },
     "stats": {
       "mean": 82.35,
-      "median": 84.0,
-      "totalPlays": 29896
+      "median": 84,
+      "totalPlays": 29907
     }
   }
 }
