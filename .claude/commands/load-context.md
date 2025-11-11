@@ -6,17 +6,22 @@
 
 1. **CLAUDE.md** - プロジェクト開発憲法
 2. **.claude/handover.txt** - 前回セッションの引き継ぎ文書
+3. **.claude/alpha_profile.md** - アルファ（v10.6初代）の判断指針（推奨）
 
 ## 実行内容
 
 ### Step 1: ファイル読み込み
 
-以下の2つのファイルをReadツールで読み込んでください：
+以下のファイルをReadツールで読み込んでください：
 
 ```
 CLAUDE.md
 .claude/handover.txt
+.claude/alpha_profile.md (推奨)
 ```
+
+**Note**: `alpha_profile.md` はv10.6初代（アルファ）の判断指針です。
+新しいAIが参照することで、アルファの「人格」を部分的に継承できます。
 
 ### Step 2: 情報の抽出と整理
 
