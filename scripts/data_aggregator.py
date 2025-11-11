@@ -236,24 +236,51 @@ def calculate_language_distribution(users_data):
 
 
 def calculate_cutscene_skip_rate(users_data):
-    """カットシーンスキップ率を計算"""
-    cutscene_start = 0
-    cutscene_skip = 0
+    """カットシーンスキップ率を計算（セッションベース）"""
+    total_sessions = 0  # カットシーン開始回数
+    skipped_sessions = 0  # スキップされたセッション数
+    total_skip_button_presses = 0  # スキップボタン押下回数（参考値）
 
     for user_id, user_data in users_data.items():
         timestamps = user_data.get('timeStamp', {})
-        for timestamp_key, event_type in timestamps.items():
-            if 'CutScene_Op_Start' in str(event_type):
-                cutscene_start += 1
-            elif 'CutScene_Op_Skip' in str(event_type):
-                cutscene_skip += 1
 
-    skip_rate = (cutscene_skip / cutscene_start * 100) if cutscene_start > 0 else 0
+        # タイムスタンプでソートしてカットシーンセッションを追跡
+        sorted_events = sorted([(k, v) for k, v in timestamps.items() if 'CutScene_Op' in str(v)])
+
+        in_cutscene = False
+        current_session_has_skip = False
+
+        for timestamp, event in sorted_events:
+            if 'Start' in str(event):
+                # 前のセッションを終了
+                if in_cutscene and current_session_has_skip:
+                    skipped_sessions += 1
+                # 新しいカットシーン開始
+                total_sessions += 1
+                in_cutscene = True
+                current_session_has_skip = False
+
+            elif 'Skip' in str(event):
+                current_session_has_skip = True
+                total_skip_button_presses += 1
+
+            elif 'End' in str(event):
+                if in_cutscene and current_session_has_skip:
+                    skipped_sessions += 1
+                in_cutscene = False
+                current_session_has_skip = False
+
+        # 最後のセッションが終了していない場合
+        if in_cutscene and current_session_has_skip:
+            skipped_sessions += 1
+
+    skip_rate = (skipped_sessions / total_sessions * 100) if total_sessions > 0 else 0
 
     return {
-        'totalStart': cutscene_start,
-        'totalSkip': cutscene_skip,
-        'skipRate': round(skip_rate, 2)
+        'totalStart': total_sessions,
+        'totalSkip': skipped_sessions,
+        'skipRate': round(skip_rate, 2),
+        'totalSkipButtonPresses': total_skip_button_presses  # デバッグ用
     }
 
 
