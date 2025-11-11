@@ -299,6 +299,44 @@ def get_recent_plays(users_data, limit=10):
     return sorted_plays[:limit]
 
 
+def calculate_song_plays_by_difficulty(users_data):
+    """楽曲別・難易度別のユニークプレイヤー数を集計"""
+    # 楽曲ID × 難易度 → ユニークユーザーIDのセット
+    song_difficulty_users = defaultdict(lambda: defaultdict(set))
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        if isinstance(results, dict):
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    game_type = result_data.get('gameType')
+                    difficulty = result_data.get('difficulty')
+
+                    if game_type and difficulty:
+                        song_difficulty_users[game_type][difficulty].add(user_id)
+
+    # データを整形してリスト化
+    song_stats = []
+    for game_type, difficulties in song_difficulty_users.items():
+        easy_count = len(difficulties.get('Easy', set()))
+        normal_count = len(difficulties.get('Normal', set()))
+        hard_count = len(difficulties.get('Hard', set()))
+        total_count = easy_count + normal_count + hard_count
+
+        song_stats.append({
+            'songId': game_type,
+            'easy': easy_count,
+            'normal': normal_count,
+            'hard': hard_count,
+            'total': total_count
+        })
+
+    # 合計プレイ人数でソート（降順）
+    sorted_stats = sorted(song_stats, key=lambda x: x['total'], reverse=True)
+
+    return sorted_stats
+
+
 def aggregate_dashboard_data(users_data):
     """全ての集計を実行してダッシュボード用データを生成"""
     print("=" * 60)
@@ -315,7 +353,8 @@ def aggregate_dashboard_data(users_data):
         'languageDistribution': calculate_language_distribution(users_data),
         'cutsceneSkipRate': calculate_cutscene_skip_rate(users_data),
         'excludedDataStats': calculate_excluded_data_stats(users_data),
-        'recentPlays': get_recent_plays(users_data)
+        'recentPlays': get_recent_plays(users_data),
+        'songPlaysByDifficulty': calculate_song_plays_by_difficulty(users_data)
     }
 
     print("✅ KPI calculated")
@@ -327,6 +366,7 @@ def aggregate_dashboard_data(users_data):
     print("✅ Cutscene skip rate calculated")
     print("✅ Excluded data stats calculated")
     print("✅ Recent plays extracted")
+    print("✅ Song plays by difficulty calculated")
 
     return dashboard_data
 

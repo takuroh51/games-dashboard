@@ -3,6 +3,7 @@ import Head from 'next/head'
 import KPICards from '@/components/KPICards'
 import ChartsPanel from '@/components/ChartsPanel'
 import RecentPlaysTable from '@/components/RecentPlaysTable'
+import SongPlaysByDifficultyTable from '@/components/SongPlaysByDifficultyTable'
 import LoginForm from '@/components/LoginForm'
 import { isAuthenticated, logout } from '@/utils/auth'
 import type { DashboardData } from '@/types/dashboard'
@@ -186,6 +187,11 @@ export default function Home() {
           {/* Recent Plays Table */}
           <div className="mt-8">
             <RecentPlaysTable plays={data.recentPlays} />
+          </div>
+
+          {/* Song Plays by Difficulty Table */}
+          <div className="mt-8">
+            <SongPlaysByDifficultyTable songPlays={data.songPlaysByDifficulty} />
           </div>
         </div>
       </main>

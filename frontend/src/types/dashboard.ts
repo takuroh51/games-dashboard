@@ -9,6 +9,7 @@ export interface DashboardData {
   cutsceneSkipRate: CutsceneSkipRate;
   excludedDataStats?: ExcludedDataStats;
   recentPlays: RecentPlay[];
+  songPlaysByDifficulty: SongPlayByDifficulty[];
 }
 
 export interface KPI {
@@ -42,4 +43,12 @@ export interface RecentPlay {
   score: number;
   clearRank: string;
   clearType: string;
+}
+
+export interface SongPlayByDifficulty {
+  songId: string;
+  easy: number;
+  normal: number;
+  hard: number;
+  total: number;
 }
