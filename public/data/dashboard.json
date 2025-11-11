@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-11T00:56:45.638786",
+  "lastUpdated": "2025-11-11T02:40:41.997996",
   "kpi": {
-    "totalUsers": 4443,
-    "totalLaunches": 9957,
-    "totalPlays": 29665,
-    "averageScore": 58423.31
+    "totalUsers": 4446,
+    "totalLaunches": 9969,
+    "totalPlays": 29666,
+    "averageScore": 58421.48
   },
   "dailyActiveUsers": [
     {
@@ -117,18 +117,18 @@
     },
     {
       "date": "2025-11-11",
-      "users": 2
+      "users": 6
     }
   ],
   "characterDistribution": {
     "Daia": 12832,
     "Hikaru": 6275,
-    "Seika": 10555
+    "Seika": 10556
   },
   "difficultyDistribution": {
     "Normal": 12971,
     "Easy": 7010,
-    "Hard": 9681
+    "Hard": 9682
   },
   "clearRankDistribution": {
     "A": 10668,
@@ -136,28 +136,36 @@
     "MM": 3002,
     "M": 5911,
     "MMM": 497,
-    "B": 6231,
+    "B": 6232,
     "C": 2724,
     "None": 12
   },
   "languageDistribution": {
     "en": 1279,
-    "jp": 617,
-    "zh-TW": 181,
-    "zh-CN": 761,
+    "jp": 618,
+    "zh-TW": 182,
+    "zh-CN": 762,
     "ko": 203
   },
   "cutsceneSkipRate": {
-    "totalStart": 3971,
-    "totalSkip": 10955,
-    "skipRate": 275.88
+    "totalStart": 3972,
+    "totalSkip": 10962,
+    "skipRate": 275.98
   },
   "excludedDataStats": {
-    "totalCount": 202217,
+    "totalCount": 202257,
     "excludedCount": 524,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-11-02-40-10-710",
+      "character": "Seika",
+      "difficulty": "Hard",
+      "score": 3950,
+      "clearRank": "B",
+      "clearType": "Failed"
+    },
     {
       "timestamp": "2025-11-11-00-35-29-408",
       "character": "Daia",
@@ -227,14 +235,6 @@
       "character": "Daia",
       "difficulty": "Hard",
       "score": 29300,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-10-22-32-07-535",
-      "character": "Daia",
-      "difficulty": "Hard",
-      "score": 28000,
       "clearRank": "A",
       "clearType": "FullCombo"
     }
