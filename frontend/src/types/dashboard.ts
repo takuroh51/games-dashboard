@@ -10,6 +10,7 @@ export interface DashboardData {
   excludedDataStats?: ExcludedDataStats;
   recentPlays: RecentPlay[];
   songPlaysByDifficulty: SongPlayByDifficulty[];
+  playerClearRateDistribution?: PlayerClearRateDistribution;
 }
 
 export interface KPI {
@@ -51,4 +52,13 @@ export interface SongPlayByDifficulty {
   normal: number;
   hard: number;
   total: number;
+}
+
+export interface PlayerClearRateDistribution {
+  distribution: Record<string, number>;
+  stats: {
+    mean: number;
+    median: number;
+    totalPlayers: number;
+  };
 }

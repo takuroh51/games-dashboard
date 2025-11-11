@@ -182,6 +182,7 @@ export default function Home() {
             difficultyDistribution={data.difficultyDistribution}
             clearRankDistribution={data.clearRankDistribution}
             languageDistribution={data.languageDistribution}
+            playerClearRateDistribution={data.playerClearRateDistribution}
           />
 
           {/* Recent Plays Table */}

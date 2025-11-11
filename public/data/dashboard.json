@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-11-11T20:40:16.986573",
+  "lastUpdated": "2025-11-12T06:46:15.228690",
   "kpi": {
     "totalUsers": 4387,
     "totalLaunches": 9867,
@@ -327,5 +327,21 @@
       "hard": 221,
       "total": 969
     }
-  ]
+  ],
+  "playerClearRateDistribution": {
+    "distribution": {
+      "0%": 519,
+      "1-19%": 11,
+      "20-39%": 145,
+      "40-59%": 330,
+      "60-79%": 523,
+      "80-99%": 728,
+      "100%": 1161
+    },
+    "stats": {
+      "mean": 69.52,
+      "median": 83.33,
+      "totalPlayers": 3417
+    }
+  }
 }

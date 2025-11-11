@@ -364,6 +364,70 @@ def calculate_song_plays_by_difficulty(users_data):
     return sorted_stats
 
 
+def calculate_player_clear_rate_distribution(users_data):
+    """プレイヤー別クリアレート分布を計算"""
+    import statistics
+
+    user_clear_rates = []
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        if isinstance(results, dict) and len(results) > 0:
+            user_total = 0
+            user_clears = 0
+
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    user_total += 1
+                    clear_type = result_data.get('clearType', 'Unknown')
+                    # Clear, FullCombo, Perfect をクリアとしてカウント
+                    if clear_type in ['Clear', 'FullCombo', 'Perfect']:
+                        user_clears += 1
+
+            if user_total > 0:
+                user_clear_rate = (user_clears / user_total) * 100
+                user_clear_rates.append(user_clear_rate)
+
+    # 7区分で集計
+    brackets = {
+        '0%': 0,
+        '1-19%': 0,
+        '20-39%': 0,
+        '40-59%': 0,
+        '60-79%': 0,
+        '80-99%': 0,
+        '100%': 0
+    }
+
+    for rate in user_clear_rates:
+        if rate == 0:
+            brackets['0%'] += 1
+        elif rate < 20:
+            brackets['1-19%'] += 1
+        elif rate < 40:
+            brackets['20-39%'] += 1
+        elif rate < 60:
+            brackets['40-59%'] += 1
+        elif rate < 80:
+            brackets['60-79%'] += 1
+        elif rate < 100:
+            brackets['80-99%'] += 1
+        else:
+            brackets['100%'] += 1
+
+    # 統計情報を計算
+    stats = {
+        'mean': round(statistics.mean(user_clear_rates), 2) if user_clear_rates else 0,
+        'median': round(statistics.median(user_clear_rates), 2) if user_clear_rates else 0,
+        'totalPlayers': len(user_clear_rates)
+    }
+
+    return {
+        'distribution': brackets,
+        'stats': stats
+    }
+
+
 def aggregate_dashboard_data(users_data):
     """全ての集計を実行してダッシュボード用データを生成"""
     print("=" * 60)
@@ -381,7 +445,8 @@ def aggregate_dashboard_data(users_data):
         'cutsceneSkipRate': calculate_cutscene_skip_rate(users_data),
         'excludedDataStats': calculate_excluded_data_stats(users_data),
         'recentPlays': get_recent_plays(users_data),
-        'songPlaysByDifficulty': calculate_song_plays_by_difficulty(users_data)
+        'songPlaysByDifficulty': calculate_song_plays_by_difficulty(users_data),
+        'playerClearRateDistribution': calculate_player_clear_rate_distribution(users_data)
     }
 
     print("✅ KPI calculated")
@@ -394,6 +459,7 @@ def aggregate_dashboard_data(users_data):
     print("✅ Excluded data stats calculated")
     print("✅ Recent plays extracted")
     print("✅ Song plays by difficulty calculated")
+    print("✅ Player clear rate distribution calculated")
 
     return dashboard_data
 
