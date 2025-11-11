@@ -1,10 +1,10 @@
 #!/bin/bash
 # claude-wrapper.sh - 会話型ゲーム開発エンジン
-# Version: 10.4.2 - Slash Command Context Loading
-# Purpose: 分析仕様・実装検証分離型 + 実験駆動型知見蓄積 + /load-context スラッシュコマンド
+# Version: 10.6 - Practical Distributed Agent System
+# Purpose: 分散並列エージェント駆動 + 実用最優先 + 具体的プロジェクト開発加速
 
 # 設定
-SCRIPT_VERSION="10.4.2"
+SCRIPT_VERSION="10.6"
 PROJECT_DIR="$(pwd)"
 PROJECT_NAME=$(basename "$PROJECT_DIR")
 CLAUDE_DIR=".claude"
@@ -256,12 +256,12 @@ EOF
 main() {
     clear
     echo "╔════════════════════════════════════════════════════╗"
-    echo "║    会話型ゲーム開発エンジン v10.4.2               ║"
-    echo "║    - 分析と実装の分離型開発                      ║"
+    echo "║    会話型ゲーム開発エンジン v10.5                 ║"
+    echo "║    - AI人格安定化機構                            ║"
     echo "╠════════════════════════════════════════════════════╣"
     echo "║ Project: $PROJECT_NAME"
     echo "║ Session: $SESSION_ID"
-    echo "║ Feature: 分析と実装の分離（平野メソッド）"
+    echo "║ Feature: 実験記録・パターン抽出・自己宣言"
     echo "╚════════════════════════════════════════════════════╝"
     echo ""
     

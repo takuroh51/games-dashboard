@@ -137,6 +137,59 @@ collect_experiment_info() {
 
 EOF
 
+    # v10.5: 実験・パターン統計
+    local active_count=0
+    local completed_count=0
+    local failed_count=0
+    local pattern_count=0
+
+    if [ -d "$CLAUDE_DIR/experiments/active" ]; then
+        active_count=$(ls -1 "$CLAUDE_DIR/experiments/active"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    fi
+    if [ -d "$CLAUDE_DIR/experiments/completed" ]; then
+        completed_count=$(ls -1 "$CLAUDE_DIR/experiments/completed"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    fi
+    if [ -d "$CLAUDE_DIR/experiments/failed" ]; then
+        failed_count=$(ls -1 "$CLAUDE_DIR/experiments/failed"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    fi
+    if [ -d "$CLAUDE_DIR/proven_patterns" ]; then
+        pattern_count=$(ls -1 "$CLAUDE_DIR/proven_patterns"/*.md 2>/dev/null | wc -l | tr -d ' ')
+    fi
+
+    cat << EOF
+## 📊 実験・パターン統計（v10.5）
+
+**実験の状況**:
+- 🔬 アクティブな実験: ${active_count}件
+- ✅ 成功した実験: ${completed_count}件
+- ❌ 失敗した実験: ${failed_count}件
+
+**パターンの状況**:
+- 📚 抽出済みパターン: ${pattern_count}件
+
+EOF
+
+    # パターン一覧（詳細）
+    if [ "$pattern_count" -gt 0 ]; then
+        cat << EOF
+**パターン一覧**:
+EOF
+        ls -t "$CLAUDE_DIR/proven_patterns"/*.md 2>/dev/null | while read pattern_file; do
+            local pattern_id=$(basename "$pattern_file" .md)
+            # パターンファイルからタイトルと信頼度を抽出
+            local title=$(grep "^# パターン:" "$pattern_file" 2>/dev/null | sed 's/^# パターン: //')
+            local confidence=$(grep "^\*\*信頼度\*\*:" "$pattern_file" 2>/dev/null | sed 's/.*: //')
+            local apply_count=$(grep "^\*\*適用回数\*\*:" "$pattern_file" 2>/dev/null | sed 's/.*: //')
+
+            if [ -n "$title" ]; then
+                echo "- **${pattern_id}** - ${title} (信頼度: ${confidence:-不明}, 適用回数: ${apply_count:-不明})"
+            else
+                echo "- **${pattern_id}**"
+            fi
+        done
+        echo ""
+    fi
+
     # アクティブな実験
     if [ -d "$CLAUDE_DIR/experiments/active" ] && [ -n "$(ls -A "$CLAUDE_DIR/experiments/active" 2>/dev/null)" ]; then
         cat << EOF
@@ -383,7 +436,7 @@ main() {
         # 各情報を収集して出力（ログメッセージを抑制）
         collect_project_info 2>/dev/null
         collect_git_info 2>/dev/null
-        collect_experiment_info 2>/dev/null
+        # collect_experiment_info 2>/dev/null  # v10.6: 実験システム削除のためコメントアウト
         collect_environment_info 2>/dev/null
         collect_session_info 2>/dev/null
         generate_warnings_and_notes 2>/dev/null
