@@ -247,13 +247,25 @@ export default function ChartsPanel({
                     datalabels: {
                       display: true,
                       anchor: 'end',
-                      align: 'end',
+                      align: (context: any) => {
+                        // 大きい値（10%以上）は内側、小さい値は外側に表示
+                        const value = context.dataset.data[context.dataIndex] as number
+                        const total = playClearRateDistribution.stats.totalPlays
+                        const percentage = (value / total) * 100
+                        return percentage > 10 ? 'start' : 'end'
+                      },
                       formatter: (value: number) => {
                         const total = playClearRateDistribution.stats.totalPlays
                         const percentage = ((value / total) * 100).toFixed(1)
                         return `${value.toLocaleString()}回 (${percentage}%)`
                       },
-                      color: '#374151',
+                      color: (context: any) => {
+                        // 内側表示の場合は白、外側は濃いグレー
+                        const value = context.dataset.data[context.dataIndex] as number
+                        const total = playClearRateDistribution.stats.totalPlays
+                        const percentage = (value / total) * 100
+                        return percentage > 10 ? '#ffffff' : '#374151'
+                      },
                       font: {
                         size: 11,
                         weight: 'bold'
