@@ -1,10 +1,11 @@
 'use client'
 
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { Line, Pie, Bar } from 'react-chartjs-2'
 import type { DailyActiveUser, PlayerClearRateDistribution, PlayClearRateDistribution } from '@/types/dashboard'
 
-ChartJS.register(ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
+ChartJS.register(ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ChartDataLabels)
 
 interface ChartsPanelProps {
   dailyActiveUsers: DailyActiveUser[]
@@ -132,6 +133,9 @@ export default function ChartsPanel({
     plugins: {
       legend: {
         position: 'top' as const,
+      },
+      datalabels: {
+        display: false // デフォルトではラベルを非表示
       }
     }
   }
@@ -237,7 +241,25 @@ export default function ChartsPanel({
                 options={{
                   ...chartOptions,
                   maintainAspectRatio: false,
-                  indexAxis: 'y' // 横棒グラフ
+                  indexAxis: 'y', // 横棒グラフ
+                  plugins: {
+                    ...chartOptions.plugins,
+                    datalabels: {
+                      display: true,
+                      anchor: 'end',
+                      align: 'end',
+                      formatter: (value: number) => {
+                        const total = playClearRateDistribution.stats.totalPlays
+                        const percentage = ((value / total) * 100).toFixed(1)
+                        return `${value.toLocaleString()}回 (${percentage}%)`
+                      },
+                      color: '#374151',
+                      font: {
+                        size: 11,
+                        weight: 'bold'
+                      }
+                    }
+                  }
                 }}
               />
             </div>
