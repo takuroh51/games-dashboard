@@ -1,10 +1,10 @@
 #!/bin/bash
 # claude-wrapper.sh - 会話型ゲーム開発エンジン
-# Version: 10.6 - Practical Distributed Agent System
-# Purpose: 分散並列エージェント駆動 + 実用最優先 + 具体的プロジェクト開発加速
+# Version: 10.6.1 - Practical Distributed Agent System + AI Personality Continuity
+# Purpose: 分散並列エージェント駆動 + AI人格継承 + 実用最優先 + 具体的プロジェクト開発加速
 
 # 設定
-SCRIPT_VERSION="10.6"
+SCRIPT_VERSION="10.6.1"
 PROJECT_DIR="$(pwd)"
 PROJECT_NAME=$(basename "$PROJECT_DIR")
 CLAUDE_DIR=".claude"

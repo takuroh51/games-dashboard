@@ -1,8 +1,8 @@
 # プロジェクト開発憲法 - claudewrapper10
 
 **作成日時**: 2025-10-12 14:06:00
-**更新日時**: 2025-11-12 23:00:00
-**バージョン**: v10.6 - Practical Distributed Agent System
+**更新日時**: 2025-11-12 11:45:00
+**バージョン**: v10.6.1 - Practical Distributed Agent System + AI Personality Continuity
 
 ---
 
@@ -262,4 +262,4 @@
 
 ---
 
-*プロジェクト開発憲法 - claude-wrapper v10.6*
+*プロジェクト開発憲法 - claude-wrapper v10.6.1*
