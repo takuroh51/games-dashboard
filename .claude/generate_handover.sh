@@ -127,127 +127,6 @@ EOF
     fi
 }
 
-# 実験・知見情報を収集
-collect_experiment_info() {
-    # log_info "実験・知見情報を収集中..."  # ファイル出力時は非表示
-
-    cat << EOF
-
-# 🧪 実験駆動型開発の状況
-
-EOF
-
-    # v10.5: 実験・パターン統計
-    local active_count=0
-    local completed_count=0
-    local failed_count=0
-    local pattern_count=0
-
-    if [ -d "$CLAUDE_DIR/experiments/active" ]; then
-        active_count=$(ls -1 "$CLAUDE_DIR/experiments/active"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    fi
-    if [ -d "$CLAUDE_DIR/experiments/completed" ]; then
-        completed_count=$(ls -1 "$CLAUDE_DIR/experiments/completed"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    fi
-    if [ -d "$CLAUDE_DIR/experiments/failed" ]; then
-        failed_count=$(ls -1 "$CLAUDE_DIR/experiments/failed"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    fi
-    if [ -d "$CLAUDE_DIR/proven_patterns" ]; then
-        pattern_count=$(ls -1 "$CLAUDE_DIR/proven_patterns"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    fi
-
-    cat << EOF
-## 📊 実験・パターン統計（v10.5）
-
-**実験の状況**:
-- 🔬 アクティブな実験: ${active_count}件
-- ✅ 成功した実験: ${completed_count}件
-- ❌ 失敗した実験: ${failed_count}件
-
-**パターンの状況**:
-- 📚 抽出済みパターン: ${pattern_count}件
-
-EOF
-
-    # パターン一覧（詳細）
-    if [ "$pattern_count" -gt 0 ]; then
-        cat << EOF
-**パターン一覧**:
-EOF
-        ls -t "$CLAUDE_DIR/proven_patterns"/*.md 2>/dev/null | while read pattern_file; do
-            local pattern_id=$(basename "$pattern_file" .md)
-            # パターンファイルからタイトルと信頼度を抽出
-            local title=$(grep "^# パターン:" "$pattern_file" 2>/dev/null | sed 's/^# パターン: //')
-            local confidence=$(grep "^\*\*信頼度\*\*:" "$pattern_file" 2>/dev/null | sed 's/.*: //')
-            local apply_count=$(grep "^\*\*適用回数\*\*:" "$pattern_file" 2>/dev/null | sed 's/.*: //')
-
-            if [ -n "$title" ]; then
-                echo "- **${pattern_id}** - ${title} (信頼度: ${confidence:-不明}, 適用回数: ${apply_count:-不明})"
-            else
-                echo "- **${pattern_id}**"
-            fi
-        done
-        echo ""
-    fi
-
-    # アクティブな実験
-    if [ -d "$CLAUDE_DIR/experiments/active" ] && [ -n "$(ls -A "$CLAUDE_DIR/experiments/active" 2>/dev/null)" ]; then
-        cat << EOF
-## 🔬 アクティブな実験
-EOF
-        ls -1 "$CLAUDE_DIR/experiments/active"/*.md 2>/dev/null | while read exp_file; do
-            local exp_name=$(basename "$exp_file" .md)
-            local created=$(ls -l "$exp_file" | awk '{print $6, $7, $8}')
-            echo "- **$exp_name** (開始: $created)"
-
-            # 実験の仮説を抜粋
-            if grep -q "## 仮説" "$exp_file"; then
-                local hypothesis=$(sed -n '/## 仮説/,/^##/p' "$exp_file" | head -5 | tail -n +2 | head -3)
-                echo "  - 仮説: $hypothesis"
-            fi
-        done
-    else
-        echo "## 🔬 アクティブな実験\n現在アクティブな実験はありません"
-    fi
-
-    # 完了した実験
-    if [ -d "$CLAUDE_DIR/experiments/completed" ] && [ -n "$(ls -A "$CLAUDE_DIR/experiments/completed" 2>/dev/null)" ]; then
-        cat << EOF
-
-## ✅ 完了した実験 (最新5件)
-EOF
-        ls -t "$CLAUDE_DIR/experiments/completed"/*.md 2>/dev/null | head -5 | while read exp_file; do
-            local exp_name=$(basename "$exp_file" .md)
-            local modified=$(ls -l "$exp_file" | awk '{print $6, $7, $8}')
-            echo "- **$exp_name** (完了: $modified)"
-        done
-    fi
-
-    # 実証済みパターン
-    if [ -d "$CLAUDE_DIR/proven_patterns" ] && [ -n "$(ls -A "$CLAUDE_DIR/proven_patterns" 2>/dev/null)" ]; then
-        cat << EOF
-
-## 🏆 実証済みパターン
-EOF
-        ls -1 "$CLAUDE_DIR/proven_patterns"/*.md 2>/dev/null | while read pattern_file; do
-            local pattern_name=$(basename "$pattern_file" .md)
-            local created=$(ls -l "$pattern_file" | awk '{print $6, $7, $8}')
-            echo "- **$pattern_name** (確立: $created)"
-        done
-    fi
-
-    # 失敗事例
-    if [ -d "$CLAUDE_DIR/experiments/failed" ] && [ -n "$(ls -A "$CLAUDE_DIR/experiments/failed" 2>/dev/null)" ]; then
-        local failed_count=$(ls -1 "$CLAUDE_DIR/experiments/failed"/*.md 2>/dev/null | wc -l)
-        cat << EOF
-
-## ❌ 失敗事例
-合計 $failed_count 件の失敗事例が記録されています
-（詳細は \`.claude/experiments/failed/\` を参照）
-EOF
-    fi
-}
-
 # 設定・環境情報を収集
 collect_environment_info() {
     # log_info "環境・設定情報を収集中..."  # ファイル出力時は非表示
@@ -371,7 +250,7 @@ generate_warnings_and_notes() {
 ## 📚 参考資料
 - \`CLAUDE.md\` - プロジェクト開発憲法
 - \`claude-wrapper.sh\` - メインスクリプト
-- \`.claude/experiments/\` - 実験記録
+- \`.claude/alpha_profile.md\` - AI人格プロファイル（アルファの判断指針）
 - \`.claude/full_text_logs/\` - 詳細なセッションログ
 
 EOF
@@ -381,15 +260,6 @@ EOF
         cat << EOF
 ## 🚨 重要な警告
 このプロジェクトはGit管理されていません。重要な変更前には必ずバックアップを作成してください。
-
-EOF
-    fi
-
-    # アクティブな実験がある場合の警告
-    if [ -d "$CLAUDE_DIR/experiments/active" ] && [ -n "$(ls -A "$CLAUDE_DIR/experiments/active" 2>/dev/null)" ]; then
-        cat << EOF
-## 🧪 実験に関する注意
-アクティブな実験があります。継続する場合は実験ファイルの内容を必ず確認してください。
 
 EOF
     fi
@@ -436,7 +306,6 @@ main() {
         # 各情報を収集して出力（ログメッセージを抑制）
         collect_project_info 2>/dev/null
         collect_git_info 2>/dev/null
-        # collect_experiment_info 2>/dev/null  # v10.6: 実験システム削除のためコメントアウト
         collect_environment_info 2>/dev/null
         collect_session_info 2>/dev/null
         generate_warnings_and_notes 2>/dev/null

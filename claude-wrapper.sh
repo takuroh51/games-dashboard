@@ -1,10 +1,10 @@
 #!/bin/bash
 # claude-wrapper.sh - 会話型ゲーム開発エンジン
-# Version: 10.6.1 - Practical Distributed Agent System + AI Personality Continuity
+# Version: 10.6.2 - Practical Distributed Agent System + AI Personality Continuity
 # Purpose: 分散並列エージェント駆動 + AI人格継承 + 実用最優先 + 具体的プロジェクト開発加速
 
 # 設定
-SCRIPT_VERSION="10.6.1"
+SCRIPT_VERSION="10.6.2"
 PROJECT_DIR="$(pwd)"
 PROJECT_NAME=$(basename "$PROJECT_DIR")
 CLAUDE_DIR=".claude"
@@ -144,79 +144,8 @@ create_handover_command() {
 
 - **サイズ**: 10〜30行程度の簡潔な記録
 - **形式**: Markdown形式
-
-詳細なプロジェクト解析が必要な場合は `/handover-full` を使用してください。
 EOF
-        echo "✅ 生成: .claude/commands/handover.md (軽量版)"
-    fi
-
-    # 重量版: handover-full.md（プロジェクト解析・週次引き継ぎ用）
-    if [ ! -f "$COMMANDS_DIR/handover-full.md" ]; then
-        cat > "$COMMANDS_DIR/handover-full.md" << 'EOF'
-# プロジェクト解析・引き継ぎ（詳細版）
-
-プロジェクトの現在の状態を包括的に調査し、引き継ぎファイルを `.claude/handover.txt` に自動生成してください。
-
-## 実行内容
-
-1. **プロジェクト基本情報の収集**:
-   - プロジェクト名、ディレクトリ構造
-   - 重要ファイルの一覧と更新状況
-
-2. **バージョン管理情報**:
-   - Git状態（ブランチ、ステータス、最新コミット）
-   - 変更されたファイルの一覧
-
-3. **実験駆動型開発の状況**:
-   - アクティブな実験の状況
-   - 完了した実験（最新5件）
-   - 実証済みパターンの一覧
-   - 失敗事例の件数
-
-4. **環境・設定情報**:
-   - システム情報（OS、アーキテクチャ）
-   - Claude Code環境
-   - 利用可能エンジン設定
-   - 環境変数の状況
-
-5. **最新セッション情報**:
-   - 最新セッションログの概要
-   - 未完了タスクの状況
-
-6. **注意事項・警告**:
-   - プロジェクトの重要な制約
-   - 引き継ぎ時の確認ポイント
-   - 参考資料の案内
-
-## 生成方法
-
-引き継ぎファイル生成スクリプト（`.claude/generate_handover.sh`）を実行して、すべての情報を自動収集します。
-
-## 期待される出力
-
-- **ファイル**: `.claude/handover.txt`
-- **形式**: Markdown形式
-- **内容**: プロジェクトの完全な現状把握と引き継ぎに必要な情報
-- **サイズ**: プロジェクトの複雑さに応じた適切なボリューム
-
-## 使用例
-
-```bash
-# スラッシュコマンド使用
-/handover-full
-
-# または直接指示
-「プロジェクト全体の詳細な引き継ぎファイルを作成してください」
-```
-
-この機能により、プロジェクトの状態を漏れなく記録し、次の作業者への完全な引き継ぎが可能になります。
-
-## 使い分け
-
-- **日常的なセッション終了時**: `/handover` （軽量版）を使用
-- **週次レビュー・他者への引き継ぎ時**: `/handover-full` （本コマンド）を使用
-EOF
-        echo "✅ 生成: .claude/commands/handover-full.md (重量版)"
+        echo "✅ 生成: .claude/commands/handover.md"
     fi
 }
 
@@ -256,12 +185,12 @@ EOF
 main() {
     clear
     echo "╔════════════════════════════════════════════════════╗"
-    echo "║    会話型ゲーム開発エンジン v10.5                 ║"
-    echo "║    - AI人格安定化機構                            ║"
+    echo "║    会話型ゲーム開発エンジン v10.6.1              ║"
+    echo "║    - 分散並列エージェント + AI人格継承            ║"
     echo "╠════════════════════════════════════════════════════╣"
     echo "║ Project: $PROJECT_NAME"
     echo "║ Session: $SESSION_ID"
-    echo "║ Feature: 実験記録・パターン抽出・自己宣言"
+    echo "║ Feature: 分散並列エージェント・実用最優先"
     echo "╚════════════════════════════════════════════════════╝"
     echo ""
     
