@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-12T08:17:16.174155",
+  "lastUpdated": "2025-11-12T09:14:16.469504",
   "kpi": {
     "totalUsers": 4496,
     "totalLaunches": 10145,
-    "totalPlays": 29985,
-    "averageScore": 58024.03
+    "totalPlays": 29986,
+    "averageScore": 58022.45
   },
   "dailyActiveUsers": [
     {
@@ -125,13 +125,13 @@
     }
   ],
   "characterDistribution": {
-    "Daia": 12959,
+    "Daia": 12960,
     "Hikaru": 6345,
     "Seika": 10678
   },
   "difficultyDistribution": {
     "Normal": 13119,
-    "Easy": 7068,
+    "Easy": 7069,
     "Hard": 9795
   },
   "clearRankDistribution": {
@@ -141,7 +141,7 @@
     "M": 5956,
     "MMM": 500,
     "B": 6312,
-    "C": 2773,
+    "C": 2774,
     "None": 12
   },
   "languageDistribution": {
@@ -149,21 +149,29 @@
     "jp": 617,
     "rus": 1,
     "zh-TW": 184,
-    "zh-CN": 769,
+    "zh-CN": 770,
     "ko": 203
   },
   "cutsceneSkipRate": {
-    "totalStart": 4013,
-    "totalSkip": 1800,
-    "skipRate": 44.85,
-    "totalSkipButtonPresses": 11084
+    "totalStart": 4014,
+    "totalSkip": 1801,
+    "skipRate": 44.87,
+    "totalSkipButtonPresses": 11091
   },
   "excludedDataStats": {
-    "totalCount": 204697,
+    "totalCount": 204721,
     "excludedCount": 532,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-12-08-23-28-188",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 10450,
+      "clearRank": "C",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-12-04-34-03-905",
       "character": "Hikaru",
@@ -235,23 +243,15 @@
       "score": 23700,
       "clearRank": "B",
       "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-12-03-54-59-034",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 15550,
-      "clearRank": "A",
-      "clearType": "FullCombo"
     }
   ],
   "songPlaysByDifficulty": [
     {
       "songId": "D01ihuu",
-      "easy": 1014,
+      "easy": 1015,
       "normal": 1300,
       "hard": 1195,
-      "total": 3509
+      "total": 3510
     },
     {
       "songId": "S01suyo",
@@ -360,12 +360,12 @@
       "40-59%": 342,
       "60-79%": 531,
       "80-99%": 741,
-      "100%": 1194
+      "100%": 1195
     },
     "stats": {
-      "mean": 69.61,
+      "mean": 69.62,
       "median": 83.33,
-      "totalPlayers": 3494
+      "totalPlayers": 3495
     }
   },
   "playClearRateDistribution": {
@@ -373,15 +373,15 @@
       "0%": 29,
       "1-19%": 33,
       "20-39%": 115,
-      "40-59%": 991,
+      "40-59%": 992,
       "60-79%": 8832,
       "80-99%": 19876,
       "100%": 92
     },
     "stats": {
       "mean": 82.36,
-      "median": 84.0,
-      "totalPlays": 29968
+      "median": 84,
+      "totalPlays": 29969
     }
   }
 }
