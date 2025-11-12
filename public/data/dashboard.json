@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-12T16:16:13.757290",
+  "lastUpdated": "2025-11-12T17:12:44.425216",
   "kpi": {
-    "totalUsers": 4509,
-    "totalLaunches": 10179,
-    "totalPlays": 30070,
-    "averageScore": 57916.27
+    "totalUsers": 4510,
+    "totalLaunches": 10181,
+    "totalPlays": 30072,
+    "averageScore": 57913.36
   },
   "dailyActiveUsers": [
     {
@@ -121,24 +121,24 @@
     },
     {
       "date": "2025-11-12",
-      "users": 35
+      "users": 37
     }
   ],
   "characterDistribution": {
-    "Daia": 12993,
-    "Hikaru": 6356,
+    "Daia": 12994,
+    "Hikaru": 6357,
     "Seika": 10718
   },
   "difficultyDistribution": {
-    "Normal": 13154,
-    "Easy": 7096,
+    "Normal": 13155,
+    "Easy": 7097,
     "Hard": 9817
   },
   "clearRankDistribution": {
-    "A": 10820,
+    "A": 10821,
     "D": 627,
     "MM": 3016,
-    "M": 5977,
+    "M": 5978,
     "MMM": 500,
     "B": 6336,
     "C": 2779,
@@ -159,11 +159,27 @@
     "totalSkipButtonPresses": 11116
   },
   "excludedDataStats": {
-    "totalCount": 205257,
+    "totalCount": 205269,
     "excludedCount": 532,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-12-16-33-47-584",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 5150,
+      "clearRank": "M",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-12-16-26-21-060",
+      "character": "Hikaru",
+      "difficulty": "Normal",
+      "score": 23450,
+      "clearRank": "A",
+      "clearType": "FullCombo"
+    },
     {
       "timestamp": "2025-11-12-16-09-47-030",
       "character": "Hikaru",
@@ -227,22 +243,6 @@
       "score": 23650,
       "clearRank": "A",
       "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-12-14-37-18-030",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 27650,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-12-14-33-01-666",
-      "character": "Seika",
-      "difficulty": "Easy",
-      "score": 20700,
-      "clearRank": "M",
-      "clearType": "FullCombo"
     }
   ],
   "songPlaysByDifficulty": [
@@ -304,10 +304,10 @@
     },
     {
       "songId": "Music_Tutorial",
-      "easy": 933,
+      "easy": 934,
       "normal": 175,
       "hard": 146,
-      "total": 1254
+      "total": 1255
     },
     {
       "songId": "H02moon",
@@ -360,12 +360,12 @@
       "40-59%": 341,
       "60-79%": 535,
       "80-99%": 742,
-      "100%": 1199
+      "100%": 1200
     },
     "stats": {
-      "mean": 69.6,
+      "mean": 69.61,
       "median": 83.33,
-      "totalPlayers": 3507
+      "totalPlayers": 3508
     }
   },
   "playClearRateDistribution": {
@@ -375,13 +375,13 @@
       "20-39%": 115,
       "40-59%": 996,
       "60-79%": 8860,
-      "80-99%": 19928,
+      "80-99%": 19930,
       "100%": 92
     },
     "stats": {
       "mean": 82.35,
       "median": 84,
-      "totalPlays": 30053
+      "totalPlays": 30055
     }
   }
 }
