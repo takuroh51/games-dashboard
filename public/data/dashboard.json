@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-13T14:12:37.205703",
+  "lastUpdated": "2025-11-13T15:14:03.497827",
   "kpi": {
     "totalUsers": 4532,
-    "totalLaunches": 10354,
-    "totalPlays": 30258,
-    "averageScore": 57681.56
+    "totalLaunches": 10357,
+    "totalPlays": 30259,
+    "averageScore": 57681.0
   },
   "dailyActiveUsers": [
     {
@@ -125,21 +125,21 @@
     },
     {
       "date": "2025-11-13",
-      "users": 25
+      "users": 27
     }
   ],
   "characterDistribution": {
     "Daia": 13061,
-    "Hikaru": 6395,
+    "Hikaru": 6396,
     "Seika": 10799
   },
   "difficultyDistribution": {
     "Normal": 13266,
     "Easy": 7122,
-    "Hard": 9867
+    "Hard": 9868
   },
   "clearRankDistribution": {
-    "A": 10877,
+    "A": 10878,
     "D": 628,
     "MM": 3037,
     "M": 6021,
@@ -164,11 +164,19 @@
     "totalSkipButtonPresses": 11158
   },
   "excludedDataStats": {
-    "totalCount": 206448,
+    "totalCount": 206456,
     "excludedCount": 532,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-13-15-13-00-776",
+      "character": "Hikaru",
+      "difficulty": "Hard",
+      "score": 40750,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-13-13-52-31-764",
       "character": "Seika",
@@ -4160,14 +4168,6 @@
       "score": 10850,
       "clearRank": "B",
       "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-11-13-25-41-484",
-      "character": "Daia",
-      "difficulty": "Easy",
-      "score": 14450,
-      "clearRank": "A",
-      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4266,8 +4266,8 @@
       "songId": "Allkank",
       "easy": 198,
       "normal": 576,
-      "hard": 230,
-      "total": 1004
+      "hard": 231,
+      "total": 1005
     },
     {
       "songId": "unmi_dummy",
@@ -4306,14 +4306,14 @@
       "1-19%": 33,
       "20-39%": 115,
       "40-59%": 998,
-      "60-79%": 8920,
+      "60-79%": 8921,
       "80-99%": 20047,
       "100%": 98
     },
     "stats": {
       "mean": 82.36,
-      "median": 84,
-      "totalPlays": 30241
+      "median": 84.0,
+      "totalPlays": 30242
     }
   }
 }
