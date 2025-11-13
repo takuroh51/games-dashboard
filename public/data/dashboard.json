@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-13T04:17:45.247605",
+  "lastUpdated": "2025-11-13T05:13:12.397121",
   "kpi": {
-    "totalUsers": 4521,
-    "totalLaunches": 10237,
-    "totalPlays": 30181,
-    "averageScore": 57778.27
+    "totalUsers": 4522,
+    "totalLaunches": 10255,
+    "totalPlays": 30182,
+    "averageScore": 57777.06
   },
   "dailyActiveUsers": [
     {
@@ -125,21 +125,21 @@
     },
     {
       "date": "2025-11-13",
-      "users": 5
+      "users": 7
     }
   ],
   "characterDistribution": {
-    "Daia": 13032,
+    "Daia": 13033,
     "Hikaru": 6382,
     "Seika": 10764
   },
   "difficultyDistribution": {
     "Normal": 13239,
-    "Easy": 7107,
+    "Easy": 7108,
     "Hard": 9832
   },
   "clearRankDistribution": {
-    "A": 10855,
+    "A": 10856,
     "D": 627,
     "MM": 3028,
     "M": 6007,
@@ -153,7 +153,7 @@
     "jp": 620,
     "rus": 1,
     "zh-TW": 186,
-    "zh-CN": 771,
+    "zh-CN": 772,
     "ko": 202
   },
   "cutsceneSkipRate": {
@@ -163,11 +163,19 @@
     "totalSkipButtonPresses": 11137
   },
   "excludedDataStats": {
-    "totalCount": 205907,
+    "totalCount": 205956,
     "excludedCount": 532,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-13-04-57-11-283",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 21350,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-13-02-56-37-405",
       "character": "Seika",
@@ -4159,14 +4167,6 @@
       "score": 32200,
       "clearRank": "B",
       "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-11-04-08-10-795",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 28400,
-      "clearRank": "M",
-      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4186,10 +4186,10 @@
     },
     {
       "songId": "D02krmi",
-      "easy": 515,
+      "easy": 516,
       "normal": 881,
       "hard": 688,
-      "total": 2084
+      "total": 2085
     },
     {
       "songId": "H01uiri",
@@ -4284,12 +4284,12 @@
       "40-59%": 341,
       "60-79%": 537,
       "80-99%": 747,
-      "100%": 1201
+      "100%": 1202
     },
     "stats": {
-      "mean": 69.63,
+      "mean": 69.64,
       "median": 83.33,
-      "totalPlayers": 3517
+      "totalPlayers": 3518
     }
   },
   "playClearRateDistribution": {
@@ -4299,13 +4299,13 @@
       "20-39%": 115,
       "40-59%": 996,
       "60-79%": 8893,
-      "80-99%": 20005,
+      "80-99%": 20006,
       "100%": 92
     },
     "stats": {
       "mean": 82.36,
-      "median": 84.0,
-      "totalPlays": 30164
+      "median": 84,
+      "totalPlays": 30165
     }
   }
 }
