@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-13T02:42:39.645405",
+  "lastUpdated": "2025-11-13T03:42:19.363855",
   "kpi": {
     "totalUsers": 4521,
-    "totalLaunches": 10216,
-    "totalPlays": 30177,
-    "averageScore": 57782.93
+    "totalLaunches": 10230,
+    "totalPlays": 30181,
+    "averageScore": 57778.27
   },
   "dailyActiveUsers": [
     {
@@ -129,23 +129,23 @@
     }
   ],
   "characterDistribution": {
-    "Daia": 13029,
+    "Daia": 13032,
     "Hikaru": 6382,
-    "Seika": 10763
+    "Seika": 10764
   },
   "difficultyDistribution": {
-    "Normal": 13235,
+    "Normal": 13239,
     "Easy": 7107,
     "Hard": 9832
   },
   "clearRankDistribution": {
-    "A": 10853,
+    "A": 10855,
     "D": 627,
     "MM": 3028,
     "M": 6007,
     "MMM": 500,
-    "B": 6361,
-    "C": 2785,
+    "B": 6362,
+    "C": 2786,
     "None": 13
   },
   "languageDistribution": {
@@ -163,11 +163,43 @@
     "totalSkipButtonPresses": 11137
   },
   "excludedDataStats": {
-    "totalCount": 205855,
+    "totalCount": 205895,
     "excludedCount": 532,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-13-02-56-37-405",
+      "character": "Seika",
+      "difficulty": "Normal",
+      "score": 23950,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-13-02-51-00-989",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 23900,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-13-02-46-51-873",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 21500,
+      "clearRank": "C",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-13-02-43-18-357",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 21300,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-13-02-38-22-142",
       "character": "Hikaru",
@@ -4135,38 +4167,6 @@
       "score": 28400,
       "clearRank": "M",
       "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-11-04-04-38-669",
-      "character": "Daia",
-      "difficulty": "Hard",
-      "score": 34450,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-11-04-01-55-813",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 27400,
-      "clearRank": "M",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-11-03-57-28-406",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 15450,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-11-03-52-36-009",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 17750,
-      "clearRank": "B",
-      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4187,9 +4187,9 @@
     {
       "songId": "D02krmi",
       "easy": 515,
-      "normal": 880,
+      "normal": 881,
       "hard": 688,
-      "total": 2083
+      "total": 2084
     },
     {
       "songId": "H01uiri",
@@ -4201,9 +4201,9 @@
     {
       "songId": "D03trko",
       "easy": 373,
-      "normal": 774,
+      "normal": 775,
       "hard": 467,
-      "total": 1614
+      "total": 1615
     },
     {
       "songId": "S02arru",
@@ -4215,9 +4215,9 @@
     {
       "songId": "D04angr",
       "easy": 334,
-      "normal": 780,
+      "normal": 781,
       "hard": 319,
-      "total": 1433
+      "total": 1434
     },
     {
       "songId": "S03unmi",
@@ -4264,9 +4264,9 @@
     {
       "songId": "Allkank",
       "easy": 198,
-      "normal": 574,
+      "normal": 575,
       "hard": 229,
-      "total": 1001
+      "total": 1002
     },
     {
       "songId": "unmi_dummy",
@@ -4298,14 +4298,14 @@
       "1-19%": 33,
       "20-39%": 115,
       "40-59%": 996,
-      "60-79%": 8891,
-      "80-99%": 20003,
+      "60-79%": 8893,
+      "80-99%": 20005,
       "100%": 92
     },
     "stats": {
       "mean": 82.36,
       "median": 84.0,
-      "totalPlays": 30160
+      "totalPlays": 30164
     }
   }
 }
