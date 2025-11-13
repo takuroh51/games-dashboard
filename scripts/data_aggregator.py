@@ -284,8 +284,8 @@ def calculate_cutscene_skip_rate(users_data):
     }
 
 
-def get_recent_plays(users_data, limit=10):
-    """最近のプレイ記録を取得"""
+def get_recent_plays(users_data, limit=500):
+    """最近のプレイ記録を取得（最大500件）"""
     all_plays = []
     today = date.today()
 
