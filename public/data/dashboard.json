@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-14T17:11:05.192617",
+  "lastUpdated": "2025-11-14T18:17:19.270412",
   "kpi": {
-    "totalUsers": 4576,
-    "totalLaunches": 10498,
-    "totalPlays": 30533,
-    "averageScore": 57344.19
+    "totalUsers": 4577,
+    "totalLaunches": 10501,
+    "totalPlays": 30534,
+    "averageScore": 57342.42
   },
   "dailyActiveUsers": [
     {
@@ -129,17 +129,17 @@
     },
     {
       "date": "2025-11-14",
-      "users": 39
+      "users": 41
     }
   ],
   "characterDistribution": {
     "Daia": 13165,
     "Hikaru": 6468,
-    "Seika": 10897
+    "Seika": 10898
   },
   "difficultyDistribution": {
     "Normal": 13341,
-    "Easy": 7246,
+    "Easy": 7247,
     "Hard": 9943
   },
   "clearRankDistribution": {
@@ -149,7 +149,7 @@
     "M": 6056,
     "MMM": 586,
     "B": 6427,
-    "C": 2807,
+    "C": 2808,
     "None": 13
   },
   "languageDistribution": {
@@ -168,11 +168,19 @@
     "totalSkipButtonPresses": 11259
   },
   "excludedDataStats": {
-    "totalCount": 208385,
+    "totalCount": 208393,
     "excludedCount": 532,
     "excludedRate": 0.26
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-14-17-46-01-717",
+      "character": "Seika",
+      "difficulty": "Easy",
+      "score": 3350,
+      "clearRank": "C",
+      "clearType": "Failed"
+    },
     {
       "timestamp": "2025-11-14-17-01-10-974",
       "character": "Seika",
@@ -4164,14 +4172,6 @@
       "score": 16550,
       "clearRank": "A",
       "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-12-12-28-26-940",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 19700,
-      "clearRank": "A",
-      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4233,10 +4233,10 @@
     },
     {
       "songId": "Music_Tutorial",
-      "easy": 942,
+      "easy": 943,
       "normal": 178,
       "hard": 147,
-      "total": 1267
+      "total": 1268
     },
     {
       "songId": "H02moon",
@@ -4290,7 +4290,7 @@
   ],
   "playerClearRateDistribution": {
     "distribution": {
-      "0%": 531,
+      "0%": 532,
       "1-19%": 11,
       "20-39%": 149,
       "40-59%": 345,
@@ -4299,9 +4299,9 @@
       "100%": 1216
     },
     "stats": {
-      "mean": 69.76,
+      "mean": 69.74,
       "median": 83.33,
-      "totalPlayers": 3550
+      "totalPlayers": 3551
     }
   },
   "playClearRateDistribution": {
@@ -4310,14 +4310,14 @@
       "1-19%": 33,
       "20-39%": 116,
       "40-59%": 1008,
-      "60-79%": 8991,
+      "60-79%": 8992,
       "80-99%": 20238,
       "100%": 100
     },
     "stats": {
       "mean": 82.38,
-      "median": 84.0,
-      "totalPlays": 30516
+      "median": 84,
+      "totalPlays": 30517
     }
   }
 }
