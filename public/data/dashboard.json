@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-15T14:10:04.418335",
+  "lastUpdated": "2025-11-15T15:10:27.225200",
   "kpi": {
     "totalUsers": 4606,
-    "totalLaunches": 10558,
-    "totalPlays": 30666,
-    "averageScore": 57505.91
+    "totalLaunches": 10560,
+    "totalPlays": 30669,
+    "averageScore": 57502.15
   },
   "dailyActiveUsers": [
     {
@@ -133,26 +133,26 @@
     },
     {
       "date": "2025-11-15",
-      "users": 38
+      "users": 40
     }
   ],
   "characterDistribution": {
     "Daia": 13232,
     "Hikaru": 6491,
-    "Seika": 10940
+    "Seika": 10943
   },
   "difficultyDistribution": {
     "Normal": 13420,
-    "Easy": 7282,
-    "Hard": 9961
+    "Easy": 7284,
+    "Hard": 9962
   },
   "clearRankDistribution": {
     "A": 11000,
     "D": 639,
-    "MM": 3071,
-    "M": 6080,
+    "MM": 3072,
+    "M": 6081,
     "MMM": 587,
-    "B": 6458,
+    "B": 6459,
     "C": 2815,
     "None": 13
   },
@@ -172,11 +172,35 @@
     "totalSkipButtonPresses": 11393
   },
   "excludedDataStats": {
-    "totalCount": 209487,
+    "totalCount": 209498,
     "excludedCount": 532,
     "excludedRate": 0.25
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-15-14-47-01-283",
+      "character": "Seika",
+      "difficulty": "Hard",
+      "score": 22850,
+      "clearRank": "B",
+      "clearType": "Failed"
+    },
+    {
+      "timestamp": "2025-11-15-14-44-36-909",
+      "character": "Seika",
+      "difficulty": "Easy",
+      "score": 16900,
+      "clearRank": "M",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-15-14-42-18-784",
+      "character": "Seika",
+      "difficulty": "Easy",
+      "score": 17650,
+      "clearRank": "MM",
+      "clearType": "Clear"
+    },
     {
       "timestamp": "2025-11-15-13-30-24-918",
       "character": "Seika",
@@ -4152,30 +4176,6 @@
       "score": 19200,
       "clearRank": "A",
       "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-13-02-08-31-281",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 15250,
-      "clearRank": "C",
-      "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-13-02-04-54-682",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 13700,
-      "clearRank": "B",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-13-02-01-20-831",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 20000,
-      "clearRank": "C",
-      "clearType": "Failed"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4258,17 +4258,17 @@
     },
     {
       "songId": "H03gara",
-      "easy": 219,
+      "easy": 220,
       "normal": 670,
       "hard": 218,
-      "total": 1107
+      "total": 1108
     },
     {
       "songId": "H04hiso",
-      "easy": 227,
+      "easy": 228,
       "normal": 609,
-      "hard": 201,
-      "total": 1037
+      "hard": 202,
+      "total": 1039
     },
     {
       "songId": "Allkank",
@@ -4314,14 +4314,14 @@
       "1-19%": 33,
       "20-39%": 117,
       "40-59%": 1012,
-      "60-79%": 9030,
-      "80-99%": 20326,
+      "60-79%": 9031,
+      "80-99%": 20328,
       "100%": 100
     },
     "stats": {
       "mean": 82.38,
-      "median": 84.0,
-      "totalPlays": 30648
+      "median": 84,
+      "totalPlays": 30651
     }
   }
 }
