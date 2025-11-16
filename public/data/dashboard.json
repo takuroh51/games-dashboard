@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-16T07:11:15.180300",
+  "lastUpdated": "2025-11-16T08:14:35.586470",
   "kpi": {
-    "totalUsers": 4632,
-    "totalLaunches": 10603,
-    "totalPlays": 30785,
-    "averageScore": 57357.11
+    "totalUsers": 4633,
+    "totalLaunches": 10605,
+    "totalPlays": 30787,
+    "averageScore": 57355.33
   },
   "dailyActiveUsers": [
     {
@@ -137,18 +137,18 @@
     },
     {
       "date": "2025-11-16",
-      "users": 14
+      "users": 16
     }
   ],
   "characterDistribution": {
     "Daia": 13287,
-    "Hikaru": 6514,
+    "Hikaru": 6516,
     "Seika": 10981
   },
   "difficultyDistribution": {
     "Normal": 13463,
     "Easy": 7321,
-    "Hard": 9998
+    "Hard": 10000
   },
   "clearRankDistribution": {
     "A": 11042,
@@ -157,7 +157,7 @@
     "M": 6094,
     "MMM": 587,
     "B": 6500,
-    "C": 2828,
+    "C": 2830,
     "None": 13
   },
   "languageDistribution": {
@@ -176,11 +176,27 @@
     "totalSkipButtonPresses": 11458
   },
   "excludedDataStats": {
-    "totalCount": 210359,
+    "totalCount": 210379,
     "excludedCount": 532,
     "excludedRate": 0.25
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-16-07-36-19-552",
+      "character": "Hikaru",
+      "difficulty": "Hard",
+      "score": 31950,
+      "clearRank": "C",
+      "clearType": "Failed"
+    },
+    {
+      "timestamp": "2025-11-16-07-33-31-037",
+      "character": "Hikaru",
+      "difficulty": "Hard",
+      "score": 27750,
+      "clearRank": "C",
+      "clearType": "Failed"
+    },
     {
       "timestamp": "2025-11-16-06-50-44-657",
       "character": "Hikaru",
@@ -4164,22 +4180,6 @@
       "score": 17800,
       "clearRank": "MMM",
       "clearType": "Perfect"
-    },
-    {
-      "timestamp": "2025-11-13-16-27-47-102",
-      "character": "Daia",
-      "difficulty": "Easy",
-      "score": 17800,
-      "clearRank": "MMM",
-      "clearType": "Perfect"
-    },
-    {
-      "timestamp": "2025-11-13-16-25-33-297",
-      "character": "Daia",
-      "difficulty": "Easy",
-      "score": 17800,
-      "clearRank": "MMM",
-      "clearType": "Perfect"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4278,8 +4278,8 @@
       "songId": "Allkank",
       "easy": 201,
       "normal": 585,
-      "hard": 235,
-      "total": 1021
+      "hard": 236,
+      "total": 1022
     },
     {
       "songId": "unmi_dummy",
@@ -4303,8 +4303,8 @@
       "20-39%": 152,
       "40-59%": 347,
       "60-79%": 548,
-      "80-99%": 760,
-      "100%": 1230
+      "80-99%": 761,
+      "100%": 1229
     },
     "stats": {
       "mean": 69.73,
@@ -4317,15 +4317,15 @@
       "0%": 30,
       "1-19%": 34,
       "20-39%": 118,
-      "40-59%": 1021,
-      "60-79%": 9079,
+      "40-59%": 1022,
+      "60-79%": 9080,
       "80-99%": 20385,
       "100%": 100
     },
     "stats": {
       "mean": 82.37,
       "median": 84,
-      "totalPlays": 30767
+      "totalPlays": 30769
     }
   }
 }
