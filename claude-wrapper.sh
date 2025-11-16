@@ -1,10 +1,10 @@
 #!/bin/bash
 # claude-wrapper.sh - 会話型ゲーム開発エンジン
-# Version: 10.6.2 - Practical Distributed Agent System + AI Personality Continuity
-# Purpose: 分散並列エージェント駆動 + AI人格継承 + 実用最優先 + 具体的プロジェクト開発加速
+# Version: 10.6.4 - Practical Distributed Agent System + AI Personality Continuity + Git-Safe Handover Summarization
+# Purpose: 分散並列エージェント駆動 + AI人格継承 + 実用最優先 + Git完全版保存 + handover自動要約 + 具体的プロジェクト開発加速
 
 # 設定
-SCRIPT_VERSION="10.6.2"
+SCRIPT_VERSION="10.6.4"
 PROJECT_DIR="$(pwd)"
 PROJECT_NAME=$(basename "$PROJECT_DIR")
 CLAUDE_DIR=".claude"
@@ -185,7 +185,7 @@ EOF
 main() {
     clear
     echo "╔════════════════════════════════════════════════════╗"
-    echo "║    会話型ゲーム開発エンジン v10.6.2              ║"
+    echo "║    会話型ゲーム開発エンジン v10.6.4              ║"
     echo "║    - 分散並列エージェント + AI人格継承            ║"
     echo "╠════════════════════════════════════════════════════╣"
     echo "║ Project: $PROJECT_NAME"
