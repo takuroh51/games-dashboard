@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-17T07:13:24.661346",
+  "lastUpdated": "2025-11-17T08:18:24.270925",
   "kpi": {
-    "totalUsers": 4745,
-    "totalLaunches": 10819,
-    "totalPlays": 31394,
-    "averageScore": 56623.87
+    "totalUsers": 4748,
+    "totalLaunches": 10822,
+    "totalPlays": 31397,
+    "averageScore": 56619.22
   },
   "dailyActiveUsers": [
     {
@@ -141,31 +141,31 @@
     },
     {
       "date": "2025-11-17",
-      "users": 29
+      "users": 32
     }
   ],
   "characterDistribution": {
-    "Daia": 13548,
+    "Daia": 13551,
     "Hikaru": 6606,
     "Seika": 11237
   },
   "difficultyDistribution": {
     "Normal": 13730,
-    "Easy": 7468,
-    "Hard": 10193
+    "Easy": 7470,
+    "Hard": 10194
   },
   "clearRankDistribution": {
-    "A": 11274,
+    "A": 11276,
     "D": 657,
     "MM": 3137,
     "M": 6192,
     "MMM": 590,
     "B": 6626,
-    "C": 2902,
+    "C": 2903,
     "None": 13
   },
   "languageDistribution": {
-    "en": 1396,
+    "en": 1398,
     "rus": 1,
     "zh-TW": 186,
     "jp": 624,
@@ -174,17 +174,41 @@
     "por": 1
   },
   "cutsceneSkipRate": {
-    "totalStart": 4206,
-    "totalSkip": 1930,
+    "totalStart": 4208,
+    "totalSkip": 1931,
     "skipRate": 45.89,
-    "totalSkipButtonPresses": 11897
+    "totalSkipButtonPresses": 11904
   },
   "excludedDataStats": {
-    "totalCount": 215224,
+    "totalCount": 215258,
     "excludedCount": 532,
     "excludedRate": 0.25
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-17-07-59-55-002",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 15750,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-17-07-48-10-454",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 4500,
+      "clearRank": "A",
+      "clearType": "Failed"
+    },
+    {
+      "timestamp": "2025-11-17-07-44-43-139",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 3800,
+      "clearRank": "C",
+      "clearType": "Failed"
+    },
     {
       "timestamp": "2025-11-17-06-51-00-819",
       "character": "Seika",
@@ -4160,39 +4184,15 @@
       "score": 16100,
       "clearRank": "M",
       "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-16-14-24-51-834",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 24100,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-24-15-075",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 18500,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-24-05-245",
-      "character": "Daia",
-      "difficulty": "Hard",
-      "score": 40700,
-      "clearRank": "M",
-      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
     {
       "songId": "D01ihuu",
-      "easy": 1066,
+      "easy": 1067,
       "normal": 1353,
       "hard": 1246,
-      "total": 3665
+      "total": 3666
     },
     {
       "songId": "S01suyo",
@@ -4245,10 +4245,10 @@
     },
     {
       "songId": "Music_Tutorial",
-      "easy": 991,
+      "easy": 992,
       "normal": 184,
-      "hard": 155,
-      "total": 1330
+      "hard": 156,
+      "total": 1332
     },
     {
       "songId": "H02moon",
@@ -4304,16 +4304,16 @@
     "distribution": {
       "0%": 559,
       "1-19%": 11,
-      "20-39%": 159,
+      "20-39%": 160,
       "40-59%": 361,
       "60-79%": 559,
       "80-99%": 781,
       "100%": 1246
     },
     "stats": {
-      "mean": 69.4,
+      "mean": 69.39,
       "median": 83.33,
-      "totalPlayers": 3676
+      "totalPlayers": 3677
     }
   },
   "playClearRateDistribution": {
@@ -4322,14 +4322,14 @@
       "1-19%": 35,
       "20-39%": 120,
       "40-59%": 1053,
-      "60-79%": 9261,
-      "80-99%": 20777,
+      "60-79%": 9262,
+      "80-99%": 20779,
       "100%": 100
     },
     "stats": {
       "mean": 82.35,
-      "median": 84.0,
-      "totalPlays": 31376
+      "median": 84,
+      "totalPlays": 31379
     }
   }
 }
