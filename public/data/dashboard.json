@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-17T10:10:59.646847",
+  "lastUpdated": "2025-11-17T10:14:28.537863",
   "kpi": {
     "totalUsers": 4753,
-    "totalLaunches": 10835,
-    "totalPlays": 31404,
-    "averageScore": 56610.26
+    "totalLaunches": 10837,
+    "totalPlays": 31405,
+    "averageScore": 56608.63
   },
   "dailyActiveUsers": [
     {
@@ -146,18 +146,18 @@
   ],
   "characterDistribution": {
     "Daia": 13555,
-    "Hikaru": 6606,
+    "Hikaru": 6607,
     "Seika": 11240
   },
   "difficultyDistribution": {
-    "Normal": 13734,
+    "Normal": 13735,
     "Easy": 7471,
     "Hard": 10196
   },
   "clearRankDistribution": {
     "A": 11279,
     "D": 658,
-    "MM": 3137,
+    "MM": 3138,
     "M": 6192,
     "MMM": 590,
     "B": 6629,
@@ -180,11 +180,19 @@
     "totalSkipButtonPresses": 11927
   },
   "excludedDataStats": {
-    "totalCount": 215402,
+    "totalCount": 215406,
     "excludedCount": 532,
     "excludedRate": 0.25
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-17-10-13-36-922",
+      "character": "Hikaru",
+      "difficulty": "Normal",
+      "score": 5300,
+      "clearRank": "MM",
+      "clearType": "FullCombo"
+    },
     {
       "timestamp": "2025-11-17-09-56-37-619",
       "character": "Daia",
@@ -4176,14 +4184,6 @@
       "score": 25750,
       "clearRank": "M",
       "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-35-36-335",
-      "character": "Seika",
-      "difficulty": "Easy",
-      "score": 2200,
-      "clearRank": "D",
-      "clearType": "Failed"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4246,9 +4246,9 @@
     {
       "songId": "Music_Tutorial",
       "easy": 992,
-      "normal": 184,
+      "normal": 185,
       "hard": 156,
-      "total": 1332
+      "total": 1333
     },
     {
       "songId": "H02moon",
@@ -4308,12 +4308,12 @@
       "40-59%": 363,
       "60-79%": 559,
       "80-99%": 781,
-      "100%": 1247
+      "100%": 1248
     },
     "stats": {
-      "mean": 69.38,
+      "mean": 69.39,
       "median": 83.33,
-      "totalPlayers": 3680
+      "totalPlayers": 3681
     }
   },
   "playClearRateDistribution": {
@@ -4323,13 +4323,13 @@
       "20-39%": 120,
       "40-59%": 1054,
       "60-79%": 9265,
-      "80-99%": 20782,
+      "80-99%": 20783,
       "100%": 100
     },
     "stats": {
-      "mean": 82.34,
-      "median": 84.0,
-      "totalPlays": 31386
+      "mean": 82.35,
+      "median": 84,
+      "totalPlays": 31387
     }
   },
   "ga4": {
