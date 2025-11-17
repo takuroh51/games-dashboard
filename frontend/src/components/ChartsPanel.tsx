@@ -3,7 +3,7 @@
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { Line, Pie, Bar } from 'react-chartjs-2'
-import type { DailyActiveUser, PlayerClearRateDistribution, PlayClearRateDistribution } from '@/types/dashboard'
+import type { DailyActiveUser, PlayerClearRateDistribution, PlayClearRateDistribution, GA4DailyMetric, GA4LanguageDistribution, GA4GuidelineMonthlyStats } from '@/types/dashboard'
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ChartDataLabels)
 
@@ -15,6 +15,10 @@ interface ChartsPanelProps {
   languageDistribution: Record<string, number>
   playerClearRateDistribution?: PlayerClearRateDistribution
   playClearRateDistribution?: PlayClearRateDistribution
+  ga4DailyMetrics?: GA4DailyMetric[]
+  ga4LanguageDistribution?: GA4LanguageDistribution[]
+  ga4GuidelineMonthlyStats?: GA4GuidelineMonthlyStats[]
+  ga4DailyMetricsPeriod?: number
 }
 
 export default function ChartsPanel({
@@ -24,7 +28,11 @@ export default function ChartsPanel({
   clearRankDistribution,
   languageDistribution,
   playerClearRateDistribution,
-  playClearRateDistribution
+  playClearRateDistribution,
+  ga4DailyMetrics,
+  ga4LanguageDistribution,
+  ga4GuidelineMonthlyStats,
+  ga4DailyMetricsPeriod
 }: ChartsPanelProps) {
   // 日別アクティブユーザー数（折れ線グラフ）
   const dailyActiveUsersData = {
@@ -123,6 +131,51 @@ export default function ChartsPanel({
         backgroundColor: 'rgba(236, 72, 153, 0.8)', // Pink
         borderColor: 'rgba(236, 72, 153, 1)',
         borderWidth: 1
+      }
+    ]
+  } : null
+
+  // GA4 日別アクセス推移（折れ線グラフ）
+  const ga4DailyData = ga4DailyMetrics ? {
+    labels: ga4DailyMetrics.map(d => d.date),
+    datasets: [
+      {
+        label: 'ページビュー',
+        data: ga4DailyMetrics.map(d => d.pageViews),
+        borderColor: 'rgb(79, 70, 229)', // Indigo
+        backgroundColor: 'rgba(79, 70, 229, 0.5)',
+        yAxisID: 'y',
+        tension: 0.3
+      },
+      {
+        label: 'アクティブユーザー',
+        data: ga4DailyMetrics.map(d => d.activeUsers),
+        borderColor: 'rgb(6, 182, 212)', // Cyan
+        backgroundColor: 'rgba(6, 182, 212, 0.5)',
+        yAxisID: 'y',
+        tension: 0.3
+      }
+    ]
+  } : null
+
+  // GA4 言語別アクセス分布（円グラフ - 上位9言語）
+  const ga4LanguageData = ga4LanguageDistribution ? {
+    labels: ga4LanguageDistribution.slice(0, 9).map(d => d.language),
+    datasets: [
+      {
+        label: 'ページビュー',
+        data: ga4LanguageDistribution.slice(0, 9).map(d => d.pageViews),
+        backgroundColor: [
+          'rgba(239, 68, 68, 0.8)',   // Red
+          'rgba(59, 130, 246, 0.8)',   // Blue
+          'rgba(16, 185, 129, 0.8)',   // Green
+          'rgba(245, 158, 11, 0.8)',   // Amber
+          'rgba(139, 92, 246, 0.8)',   // Violet
+          'rgba(236, 72, 153, 0.8)',   // Pink
+          'rgba(14, 165, 233, 0.8)',   // Sky
+          'rgba(168, 85, 247, 0.8)',   // Purple
+          'rgba(34, 197, 94, 0.8)',    // Green
+        ]
       }
     ]
   } : null
@@ -278,6 +331,62 @@ export default function ChartsPanel({
           </div>
         )}
       </div>
+
+      {/* ガイドラインページ月別言語別アクセス統計 */}
+      {ga4GuidelineMonthlyStats && ga4GuidelineMonthlyStats.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            📖 ガイドラインページ アクセス統計
+          </h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+            <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+              月別言語別アクセス数
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm text-gray-900 dark:text-white">
+                <thead className="bg-gray-100 dark:bg-gray-700">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">月</th>
+                    <th className="px-4 py-2 text-right font-semibold">日本語</th>
+                    <th className="px-4 py-2 text-right font-semibold">英語</th>
+                    <th className="px-4 py-2 text-right font-semibold">韓国語</th>
+                    <th className="px-4 py-2 text-right font-semibold">簡体中国語</th>
+                    <th className="px-4 py-2 text-right font-semibold">繁体中国語</th>
+                    <th className="px-4 py-2 text-right font-semibold">フランス語</th>
+                    <th className="px-4 py-2 text-right font-semibold">スペイン語</th>
+                    <th className="px-4 py-2 text-right font-semibold">ポルトガル語</th>
+                    <th className="px-4 py-2 text-right font-semibold">ロシア語</th>
+                    <th className="px-4 py-2 text-right font-semibold">合計</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ga4GuidelineMonthlyStats.map((stat, index) => {
+                    const total = (stat.ja || 0) + (stat.en || 0) + (stat.ko || 0) +
+                                 (stat['zh-hans'] || 0) + (stat['zh-hant'] || 0) +
+                                 (stat.fr || 0) + (stat.es || 0) + (stat.pt || 0) + (stat.ru || 0)
+                    return (
+                      <tr key={index} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <td className="px-4 py-2 font-medium">{stat.month}</td>
+                        <td className="px-4 py-2 text-right">{stat.ja || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat.en || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat.ko || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat['zh-hans'] || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat['zh-hant'] || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat.fr || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat.es || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat.pt || '-'}</td>
+                        <td className="px-4 py-2 text-right">{stat.ru || '-'}</td>
+                        <td className="px-4 py-2 text-right font-bold">{total}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

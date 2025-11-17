@@ -12,6 +12,7 @@ export interface DashboardData {
   songPlaysByDifficulty: SongPlayByDifficulty[];
   playerClearRateDistribution?: PlayerClearRateDistribution;
   playClearRateDistribution?: PlayClearRateDistribution;
+  ga4?: GA4Data;
 }
 
 export interface KPI {
@@ -71,4 +72,43 @@ export interface PlayClearRateDistribution {
     median: number;
     totalPlays: number;
   };
+}
+
+export interface GA4Data {
+  overallMetrics: GA4OverallMetrics;
+  dailyMetrics: GA4DailyMetric[];
+  languageDistribution: GA4LanguageDistribution[];
+  guidelineMonthlyStats: GA4GuidelineMonthlyStats[];
+  dailyMetricsPeriod?: number;
+}
+
+export interface GA4OverallMetrics {
+  totalPageViews: number;
+  totalUsers: number;
+  todayPageViews: number;
+}
+
+export interface GA4DailyMetric {
+  date: string;
+  pageViews: number;
+  activeUsers: number;
+}
+
+export interface GA4LanguageDistribution {
+  language: string;
+  pageViews: number;
+  activeUsers: number;
+}
+
+export interface GA4GuidelineMonthlyStats {
+  month: string;
+  ja?: number;
+  en?: number;
+  ko?: number;
+  'zh-hans'?: number;
+  'zh-hant'?: number;
+  fr?: number;
+  es?: number;
+  pt?: number;
+  ru?: number;
 }

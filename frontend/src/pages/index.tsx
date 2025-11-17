@@ -184,6 +184,10 @@ export default function Home() {
             languageDistribution={data.languageDistribution}
             playerClearRateDistribution={data.playerClearRateDistribution}
             playClearRateDistribution={data.playClearRateDistribution}
+            ga4DailyMetrics={data.ga4?.dailyMetrics}
+            ga4LanguageDistribution={data.ga4?.languageDistribution}
+            ga4GuidelineMonthlyStats={data.ga4?.guidelineMonthlyStats}
+            ga4DailyMetricsPeriod={data.ga4?.dailyMetricsPeriod}
           />
 
           {/* Recent Plays Table */}

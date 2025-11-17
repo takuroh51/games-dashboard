@@ -43,6 +43,19 @@ def load_raw_data(input_path='public/data/raw_data.json'):
     return data
 
 
+def load_ga4_data(input_path='public/data/ga4_data.json'):
+    """GA4データを読み込み"""
+    if not os.path.exists(input_path):
+        print(f"⚠️  Warning: {input_path} not found (GA4 data will be skipped)")
+        return None
+
+    with open(input_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    print(f"✅ Loaded GA4 data from {input_path}")
+    return data
+
+
 def calculate_excluded_data_stats(users_data):
     """除外データ（異常年、未来日付）の統計を計算"""
     total_count = 0
@@ -490,7 +503,7 @@ def calculate_play_clear_rate_distribution(users_data):
     }
 
 
-def aggregate_dashboard_data(users_data):
+def aggregate_dashboard_data(users_data, ga4_data=None):
     """全ての集計を実行してダッシュボード用データを生成"""
     print("=" * 60)
     print("Aggregating dashboard data...")
@@ -512,6 +525,17 @@ def aggregate_dashboard_data(users_data):
         'playClearRateDistribution': calculate_play_clear_rate_distribution(users_data)
     }
 
+    # GA4データを統合
+    if ga4_data:
+        daily_metrics = ga4_data.get('dailyMetrics', [])
+        dashboard_data['ga4'] = {
+            'overallMetrics': ga4_data.get('overallMetrics', {}),
+            'dailyMetrics': daily_metrics,
+            'languageDistribution': ga4_data.get('languageDistribution', []),
+            'guidelineMonthlyStats': ga4_data.get('guidelineMonthlyStats', []),
+            'dailyMetricsPeriod': len(daily_metrics)  # データの日数を追加
+        }
+
     print("✅ KPI calculated")
     print("✅ Daily active users calculated")
     print("✅ Character distribution calculated")
@@ -524,6 +548,8 @@ def aggregate_dashboard_data(users_data):
     print("✅ Song plays by difficulty calculated")
     print("✅ Player clear rate distribution calculated")
     print("✅ Play clear rate distribution calculated")
+    if ga4_data:
+        print("✅ GA4 data integrated")
 
     return dashboard_data
 
@@ -550,8 +576,11 @@ def main():
     if not users_data:
         return
 
+    # GA4データ読み込み（オプション）
+    ga4_data = load_ga4_data()
+
     # データ集計
-    dashboard_data = aggregate_dashboard_data(users_data)
+    dashboard_data = aggregate_dashboard_data(users_data, ga4_data)
 
     # 保存
     save_dashboard_data(dashboard_data)

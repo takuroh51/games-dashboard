@@ -33,27 +33,30 @@ export default function KPICards({ kpi }: KPICardsProps) {
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      {cards.map((card, index) => (
-        <div
-          key={index}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700"
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                {card.title}
-              </p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                {card.value}
-              </p>
-            </div>
-            <div className={`${card.color} w-12 h-12 rounded-full flex items-center justify-center text-2xl`}>
-              {card.icon}
+    <div>
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {cards.map((card, index) => (
+          <div
+            key={index}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  {card.title}
+                </p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                  {card.value}
+                </p>
+              </div>
+              <div className={`${card.color} w-12 h-12 rounded-full flex items-center justify-center text-2xl`}>
+                {card.icon}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   )
 }
