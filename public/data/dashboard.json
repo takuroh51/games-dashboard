@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-17T11:11:12.144554",
+  "lastUpdated": "2025-11-17T12:24:14.939389",
   "kpi": {
-    "totalUsers": 4755,
-    "totalLaunches": 10854,
-    "totalPlays": 31417,
-    "averageScore": 56593.98
+    "totalUsers": 4759,
+    "totalLaunches": 10861,
+    "totalPlays": 31424,
+    "averageScore": 56585.15
   },
   "dailyActiveUsers": [
     {
@@ -141,50 +141,106 @@
     },
     {
       "date": "2025-11-17",
-      "users": 44
+      "users": 49
     }
   ],
   "characterDistribution": {
-    "Daia": 13560,
+    "Daia": 13565,
     "Hikaru": 6609,
-    "Seika": 11245
+    "Seika": 11247
   },
   "difficultyDistribution": {
-    "Normal": 13738,
-    "Easy": 7474,
-    "Hard": 10202
+    "Normal": 13739,
+    "Easy": 7475,
+    "Hard": 10207
   },
   "clearRankDistribution": {
-    "A": 11282,
+    "A": 11285,
     "D": 659,
-    "MM": 3141,
+    "MM": 3142,
     "M": 6194,
     "MMM": 591,
-    "B": 6629,
+    "B": 6632,
     "C": 2905,
     "None": 13
   },
   "languageDistribution": {
-    "en": 1400,
+    "en": 1401,
+    "ko": 211,
     "rus": 1,
-    "zh-TW": 186,
+    "zh-TW": 187,
     "jp": 624,
     "zh-CN": 793,
-    "ko": 210,
     "por": 1
   },
   "cutsceneSkipRate": {
-    "totalStart": 4215,
-    "totalSkip": 1936,
+    "totalStart": 4217,
+    "totalSkip": 1937,
     "skipRate": 45.93,
-    "totalSkipButtonPresses": 11944
+    "totalSkipButtonPresses": 11951
   },
   "excludedDataStats": {
-    "totalCount": 215527,
+    "totalCount": 215604,
     "excludedCount": 532,
     "excludedRate": 0.25
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-17-11-38-12-714",
+      "character": "Seika",
+      "difficulty": "Hard",
+      "score": 30500,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-17-11-23-58-253",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 30500,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-17-11-20-37-430",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 21700,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-17-11-20-14-389",
+      "character": "Seika",
+      "difficulty": "Normal",
+      "score": 5350,
+      "clearRank": "MM",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-17-11-17-16-722",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 4850,
+      "clearRank": "A",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-17-11-15-35-732",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 21650,
+      "clearRank": "A",
+      "clearType": "Failed"
+    },
+    {
+      "timestamp": "2025-11-17-11-14-14-680",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 3950,
+      "clearRank": "B",
+      "clearType": "Failed"
+    },
     {
       "timestamp": "2025-11-17-11-09-43-631",
       "character": "Seika",
@@ -4128,62 +4184,6 @@
       "score": 24550,
       "clearRank": "A",
       "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-59-16-468",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 26100,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-55-09-369",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 38600,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-54-10-437",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 19100,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-51-24-047",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 30300,
-      "clearRank": "MM",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-16-14-50-31-522",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 22550,
-      "clearRank": "A",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-46-59-878",
-      "character": "Hikaru",
-      "difficulty": "Normal",
-      "score": 23000,
-      "clearRank": "M",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-16-14-45-40-459",
-      "character": "Hikaru",
-      "difficulty": "Hard",
-      "score": 31250,
-      "clearRank": "MM",
-      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4205,8 +4205,8 @@
       "songId": "D02krmi",
       "easy": 535,
       "normal": 910,
-      "hard": 714,
-      "total": 2159
+      "hard": 715,
+      "total": 2160
     },
     {
       "songId": "H01uiri",
@@ -4245,10 +4245,10 @@
     },
     {
       "songId": "Music_Tutorial",
-      "easy": 993,
-      "normal": 185,
-      "hard": 157,
-      "total": 1335
+      "easy": 994,
+      "normal": 186,
+      "hard": 158,
+      "total": 1338
     },
     {
       "songId": "H02moon",
@@ -4304,16 +4304,16 @@
     "distribution": {
       "0%": 559,
       "1-19%": 11,
-      "20-39%": 160,
-      "40-59%": 364,
-      "60-79%": 559,
+      "20-39%": 159,
+      "40-59%": 365,
+      "60-79%": 560,
       "80-99%": 781,
       "100%": 1248
     },
     "stats": {
       "mean": 69.39,
       "median": 83.33,
-      "totalPlayers": 3682
+      "totalPlayers": 3683
     }
   },
   "playClearRateDistribution": {
@@ -4322,14 +4322,14 @@
       "1-19%": 35,
       "20-39%": 120,
       "40-59%": 1056,
-      "60-79%": 9266,
-      "80-99%": 20792,
+      "60-79%": 9270,
+      "80-99%": 20795,
       "100%": 100
     },
     "stats": {
       "mean": 82.35,
-      "median": 84,
-      "totalPlays": 31399
+      "median": 84.0,
+      "totalPlays": 31406
     }
   },
   "ga4": {
