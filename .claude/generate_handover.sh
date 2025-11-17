@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # generate_handover.sh - 引き継ぎファイル自動生成スクリプト
 # Version: 1.0.0
 # Purpose: プロジェクトの状態を包括的に収集して引き継ぎファイルを作成
@@ -33,6 +34,33 @@ log_warning() {
 
 log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# ヘルプメッセージ表示
+show_help() {
+    cat << 'EOF'
+使用方法: generate_handover.sh [オプション]
+
+引き継ぎファイルを自動生成します。
+
+オプション:
+  -h, --help              このヘルプメッセージを表示
+  -t, --threshold <行数>  要約を実行する閾値（デフォルト: 1400行）
+  -s, --summary-lines <行数>  各セッションの要約行数（デフォルト: 10行）
+  --no-summarize          要約処理をスキップ
+
+例:
+  # 通常実行
+  ./generate_handover.sh
+
+  # 閾値を2000行に変更
+  ./generate_handover.sh --threshold 2000
+
+  # 要約をスキップ
+  ./generate_handover.sh --no-summarize
+
+詳細: CLAUDE.md を参照してください。
+EOF
 }
 
 # プロジェクト基本情報を収集
@@ -265,10 +293,153 @@ EOF
     fi
 }
 
-# セッション履歴要約機能（v10.6.4）
+# セッション検出ロジック（要約対象の最初のセッションを見つける）
+detect_first_detailed_session() {
+    local history_start="$1"
+    local has_summary_section="$2"
+
+    local first_detailed_session_line=""
+    if [ "$has_summary_section" -gt 0 ]; then
+        # 要約済みセクションの後の最初のセッション
+        local summary_end=$(grep -n "^## 📦 過去のセッション（要約版）" "$HANDOVER_FILE" | head -1 | cut -d: -f1)
+        first_detailed_session_line=$(sed -n "${summary_end},\$p" "$HANDOVER_FILE" | grep -n "^## 💬 セッション" | head -1 | cut -d: -f1)
+        first_detailed_session_line=$((summary_end + first_detailed_session_line - 1))
+    else
+        # 要約セクションがない場合、履歴開始後の最初のセッション
+        first_detailed_session_line=$(sed -n "${history_start},\$p" "$HANDOVER_FILE" | grep -n "^## 💬 セッション" | head -1 | cut -d: -f1)
+        first_detailed_session_line=$((history_start + first_detailed_session_line - 1))
+    fi
+
+    # セッション検出の検証
+    if [ -z "$first_detailed_session_line" ] || ! [[ "$first_detailed_session_line" =~ ^[0-9]+$ ]]; then
+        log_error "要約対象のセッションが見つかりません（セッション検出失敗）"
+        log_error "対処法: handover.txt のセッション履歴を確認してください"
+        echo ""  # 空の結果を返してエラー伝播
+        return 1
+    fi
+
+    # 次のセッション開始位置を見つける（または末尾）
+    local next_session_line=$(sed -n "$((first_detailed_session_line + 1)),\$p" "$HANDOVER_FILE" | grep -n "^## 💬 セッション" | head -1 | cut -d: -f1)
+    if [ -n "$next_session_line" ]; then
+        next_session_line=$((first_detailed_session_line + next_session_line - 1))
+    else
+        next_session_line=$(wc -l < "$HANDOVER_FILE")
+        next_session_line=$((next_session_line + 1))
+    fi
+
+    # 結果を返す
+    echo "$first_detailed_session_line $next_session_line"
+}
+
+# プレビューと承認処理
+preview_and_confirm() {
+    local session_title="$1"
+    local session_content="$2"
+    local summary_lines="$3"
+
+    # プレビュー表示
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "📋 要約プレビュー"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "【要約されるセッション（${summary_lines}行に圧縮）】"
+    echo "$session_title"
+    echo ""
+    echo "【要約後の内容】"
+    echo "$session_content"
+    echo "..."
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+
+    # ユーザー承認待ち
+    echo -n "この要約を実行しますか？ [y/N]: "
+    read -r response
+
+    if [[ ! "$response" =~ ^[Yy]$ ]]; then
+        return 1  # キャンセル
+    fi
+
+    return 0  # 承認
+}
+
+# 要約実行処理
+apply_summarization() {
+    local history_start="$1"
+    local has_summary_section="$2"
+    local first_detailed_session_line="$3"
+    local next_session_line="$4"
+    local session_content="$5"
+
+    # 一時ファイル作成
+    local TEMP_FILE=$(mktemp "${CLAUDE_DIR}/.handover_summarize.XXXXXX") || {
+        log_error "一時ファイルの作成に失敗しました"
+        return 1
+    }
+    log_info "要約ファイルを作成中..."
+
+    # 要約版を作成
+    {
+        # 1. セッション履歴開始まで（静的部分）
+        sed -n "1,$((history_start))p" "$HANDOVER_FILE"
+
+        echo ""
+        echo "# 📚 セッション履歴"
+        echo ""
+        echo "_ここに各セッションの作業記録が追記されます。_"
+        echo "_新しいセッション記録を追加するには \`/handover\` を使用してください。_"
+        echo ""
+
+        # 2. 要約済みセクション（存在すれば保持、なければ作成）
+        if [ "$has_summary_section" -gt 0 ]; then
+            # 既存の要約済みセクションを保持
+            local summary_start=$(grep -n "^## 📦 過去のセッション（要約版）" "$HANDOVER_FILE" | head -1 | cut -d: -f1)
+            sed -n "${summary_start},$((first_detailed_session_line - 1))p" "$HANDOVER_FILE"
+        else
+            # 新規作成
+            echo "## 📦 過去のセッション（要約版）"
+            echo ""
+            echo "以下は古いセッションの要約です（各セッション約${SUMMARY_LINES}行）。"
+            echo "完全版は \`git log\` でコミット履歴を参照してください。"
+            echo ""
+        fi
+
+        # 3. 今回要約するセッション（10行）
+        echo "$session_content"
+        echo ""
+        echo "---"
+        echo ""
+
+        # 4. 残りの詳細セッション
+        sed -n "${next_session_line},\$p" "$HANDOVER_FILE"
+
+    } > "$TEMP_FILE"
+
+    # 置き換え
+    mv "$TEMP_FILE" "$HANDOVER_FILE"
+
+    # 要約後の整合性検証
+    if ! grep -q "<!-- SESSION_HISTORY_START -->" "$HANDOVER_FILE"; then
+        log_error "要約後のファイルが破損しています（マーカー消失）"
+        log_error "対処法: git で前のバージョンに戻してください"
+        return 1
+    fi
+    log_info "要約後のファイル検証: OK"
+
+    # 結果表示
+    local total_lines=$(wc -l < "$HANDOVER_FILE")  # 要約前の行数は呼び出し元で保存
+    local new_lines=$(wc -l < "$HANDOVER_FILE")
+    echo ""
+    log_success "要約完了！"
+    log_info "要約後: ${new_lines}行"
+    log_info "完全版は git コミット履歴に保存されています"
+    echo ""
+}
+
+# セッション履歴要約機能（v10.6.5 - 段階的圧縮）
 summarize_old_sessions() {
-    local LINE_THRESHOLD=1400
-    local KEEP_SESSIONS=5
+    # LINE_THRESHOLD と SUMMARY_LINES は環境変数として main から受け取る
 
     # 行数チェック
     local total_lines=$(wc -l < "$HANDOVER_FILE")
@@ -279,110 +450,86 @@ summarize_old_sessions() {
     fi
 
     log_warning "handover.txt が ${total_lines}行 (閾値: ${LINE_THRESHOLD}行超過)"
-    log_info "セッション履歴の要約を開始します..."
+    log_info "一番古いセッション1件を${SUMMARY_LINES}行に要約します..."
 
     # セッション履歴開始位置を検出
-    local history_start=$(grep -n "<!-- SESSION_HISTORY_START -->" "$HANDOVER_FILE" | cut -d: -f1)
+    local history_start=$(grep -n "<!-- SESSION_HISTORY_START -->" "$HANDOVER_FILE" | head -1 | cut -d: -f1)
     if [ -z "$history_start" ]; then
         log_error "セッション履歴マーカーが見つかりません"
+        log_error "対処法: handover.txt に '<!-- SESSION_HISTORY_START -->' を手動で追加してください"
         log_error "要約をスキップします"
         return 1
     fi
 
-    # セッション数をカウント
-    local session_count=$(grep -c "^## 💬 セッション" "$HANDOVER_FILE")
-    log_info "検出されたセッション数: ${session_count}件"
+    # 要約済みセクションの存在確認
+    local has_summary_section=$(grep -c "^## 📦 過去のセッション（要約版）" "$HANDOVER_FILE")
 
-    if [ "$session_count" -le "$KEEP_SESSIONS" ]; then
-        log_info "セッション数が${KEEP_SESSIONS}件以下のため、要約は不要です"
-        return 0
+    log_info "セッション検出を開始..."
+
+    # 関数呼び出し（セッション検出）
+    local session_data=$(detect_first_detailed_session "$history_start" "$has_summary_section")
+    if [ -z "$session_data" ]; then
+        return 1  # エラー（detect_first_detailed_session内でログ出力済み）
     fi
+    read first_detailed_session_line next_session_line <<< "$session_data"
 
-    # 要約対象セッション数
-    local sessions_to_summarize=$((session_count - KEEP_SESSIONS))
-    log_warning "古い${sessions_to_summarize}件のセッションを要約します"
-    log_info "直近${KEEP_SESSIONS}件は詳細を保持します"
+    # セッションタイトルを抽出
+    local session_title=$(sed -n "${first_detailed_session_line}p" "$HANDOVER_FILE")
+    log_info "要約対象: $session_title"
 
-    # 一時ファイル作成
-    local TEMP_STATIC="$CLAUDE_DIR/.handover_static.tmp"
-    local TEMP_SUMMARY="$CLAUDE_DIR/.handover_summary.tmp"
-    local TEMP_KEEP="$CLAUDE_DIR/.handover_keep.tmp"
+    # セッション内容を抽出（最初のSUMMARY_LINES行）
+    local session_content=$(sed -n "${first_detailed_session_line},$((first_detailed_session_line + SUMMARY_LINES))p" "$HANDOVER_FILE")
 
-    # 静的部分を抽出（マーカーまで）
-    sed -n "1,${history_start}p" "$HANDOVER_FILE" > "$TEMP_STATIC"
-
-    # セッション履歴ヘッダー
-    echo "" > "$TEMP_SUMMARY"
-    echo "# 📚 セッション履歴" >> "$TEMP_SUMMARY"
-    echo "" >> "$TEMP_SUMMARY"
-    echo "_ここに各セッションの作業記録が追記されます。_" >> "$TEMP_SUMMARY"
-    echo "_新しいセッション記録を追加するには \`/handover\` を使用してください。_" >> "$TEMP_SUMMARY"
-    echo "" >> "$TEMP_SUMMARY"
-    echo "## 📦 過去のセッション（要約版）" >> "$TEMP_SUMMARY"
-    echo "" >> "$TEMP_SUMMARY"
-    echo "以下は古いセッション（${sessions_to_summarize}件）の要約です。" >> "$TEMP_SUMMARY"
-    echo "完全版は \`git log\` でコミット履歴を参照してください。" >> "$TEMP_SUMMARY"
-    echo "" >> "$TEMP_SUMMARY"
-
-    # 古いセッションを抽出して1行要約
-    local session_num=0
-    grep -n "^## 💬 セッション" "$HANDOVER_FILE" | head -n $sessions_to_summarize | while IFS=: read line_num session_line; do
-        session_num=$((session_num + 1))
-        # セッション情報のみ抽出（1行）
-        echo "- ${session_line}" >> "$TEMP_SUMMARY"
-    done
-
-    echo "" >> "$TEMP_SUMMARY"
-    echo "---" >> "$TEMP_SUMMARY"
-    echo "" >> "$TEMP_SUMMARY"
-
-    # 直近N件のセッションを抽出
-    local keep_start=$(grep -n "^## 💬 セッション" "$HANDOVER_FILE" | tail -n $KEEP_SESSIONS | head -1 | cut -d: -f1)
-    sed -n "${keep_start},\$p" "$HANDOVER_FILE" > "$TEMP_KEEP"
-
-    # 要約案をプレビュー
-    echo ""
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo "📋 要約プレビュー"
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo ""
-    echo "【要約されるセッション】"
-    head -20 "$TEMP_SUMMARY" | tail -n +8
-    echo ""
-    echo "【保持されるセッション（直近${KEEP_SESSIONS}件）】"
-    grep "^## 💬 セッション" "$TEMP_KEEP"
-    echo ""
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo ""
-
-    # ユーザー承認待ち
-    echo -n "この要約を実行しますか？ [y/N]: "
-    read -r response
-
-    if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    # プレビューと承認
+    if ! preview_and_confirm "$session_title" "$session_content" "$SUMMARY_LINES"; then
         log_info "要約をキャンセルしました"
-        rm -f "$TEMP_STATIC" "$TEMP_SUMMARY" "$TEMP_KEEP"
         return 0
     fi
 
-    # 要約版を作成
-    cat "$TEMP_STATIC" "$TEMP_SUMMARY" "$TEMP_KEEP" > "$HANDOVER_FILE"
+    # 要約実行
+    apply_summarization "$history_start" "$has_summary_section" \
+        "$first_detailed_session_line" "$next_session_line" "$session_content"
 
-    # 一時ファイル削除
-    rm -f "$TEMP_STATIC" "$TEMP_SUMMARY" "$TEMP_KEEP"
-
-    # 結果表示
+    # 結果表示（要約後の行数比較）
     local new_lines=$(wc -l < "$HANDOVER_FILE")
     local reduced=$((total_lines - new_lines))
-    echo ""
-    log_success "要約完了！"
     log_info "要約前: ${total_lines}行 → 要約後: ${new_lines}行（-${reduced}行）"
-    log_info "完全版は git コミット履歴に保存されています"
-    echo ""
 }
 
 # メイン処理
 main() {
+    # デフォルト値
+    local LINE_THRESHOLD=1400
+    local SUMMARY_LINES=10
+    local ENABLE_SUMMARIZE=true
+
+    # 引数パース
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -h|--help)
+                show_help
+                exit 0
+                ;;
+            -t|--threshold)
+                LINE_THRESHOLD="$2"
+                shift 2
+                ;;
+            -s|--summary-lines)
+                SUMMARY_LINES="$2"
+                shift 2
+                ;;
+            --no-summarize)
+                ENABLE_SUMMARIZE=false
+                shift
+                ;;
+            *)
+                log_error "不明なオプション: $1"
+                show_help
+                exit 1
+                ;;
+        esac
+    done
+
     # clearコマンドを削除: Claude Codeの会話履歴を保持するため
     echo ""
     echo "╔════════════════════════════════════════════════════╗"
@@ -400,7 +547,10 @@ main() {
     mkdir -p "$CLAUDE_DIR"
 
     # 既存のセッション履歴を保存
-    TEMP_SESSIONS="$CLAUDE_DIR/.handover_sessions.tmp"
+    TEMP_SESSIONS=$(mktemp "${CLAUDE_DIR}/.handover_sessions.XXXXXX") || {
+        log_error "一時ファイルの作成に失敗しました"
+        exit 1
+    }
     if [ -f "$HANDOVER_FILE" ]; then
         log_info "既存のセッション履歴を保存中..."
         # "# 📚 セッション履歴" 以降を保存
@@ -420,11 +570,11 @@ main() {
         echo ""
 
         # 各情報を収集して出力（ログメッセージを抑制）
-        collect_project_info 2>/dev/null
-        collect_git_info 2>/dev/null
-        collect_environment_info 2>/dev/null
-        collect_session_info 2>/dev/null
-        generate_warnings_and_notes 2>/dev/null
+        collect_project_info 2>/dev/null || true
+        collect_git_info 2>/dev/null || true
+        collect_environment_info 2>/dev/null || true
+        collect_session_info 2>/dev/null || true
+        generate_warnings_and_notes 2>/dev/null || true
 
         echo ""
         echo "---"
@@ -492,9 +642,30 @@ EOF
     echo "  「引き継ぎファイルの内容を表示してください」"
     echo ""
 
-    # セッション履歴要約チェック（v10.6.4）
-    # Note: 要約はhandover.txtが1400行を超えた場合のみ実行されます
-    summarize_old_sessions
+    # gitコミット（要約前のバックアップ - v10.6.5）
+    if [ -d ".git" ]; then
+        log_info "handover.txtをgitコミット中..."
+        git add "$HANDOVER_FILE" 2>/dev/null
+        if git diff --cached --quiet "$HANDOVER_FILE" 2>/dev/null; then
+            log_info "gitコミットをスキップ（変更なし）"
+        else
+            git commit -m "chore: update handover.txt ($total_lines lines)" 2>/dev/null
+            if [ $? -eq 0 ]; then
+                log_success "gitコミット完了（静的情報更新 + セッション履歴復元）"
+            else
+                log_warning "gitコミット失敗"
+            fi
+        fi
+    else
+        log_warning "gitリポジトリではありません。gitコミットをスキップします。"
+    fi
+    echo ""
+
+    # セッション履歴要約チェック（v10.6.5 - 段階的圧縮）
+    if [ "$ENABLE_SUMMARIZE" = true ]; then
+        export LINE_THRESHOLD SUMMARY_LINES  # サブ関数で使用
+        summarize_old_sessions
+    fi
 }
 
 # スクリプト実行

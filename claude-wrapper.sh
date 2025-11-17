@@ -8,7 +8,6 @@ SCRIPT_VERSION="10.6.4"
 PROJECT_DIR="$(pwd)"
 PROJECT_NAME=$(basename "$PROJECT_DIR")
 CLAUDE_DIR=".claude"
-LOG_DIR="$CLAUDE_DIR/logs"
 FULL_TEXT_DIR="$CLAUDE_DIR/full_text_logs"
 HANDOVER_FILE="$CLAUDE_DIR/handover.txt"
 SESSION_ID="$(date +%Y%m%d_%H%M)"
@@ -20,7 +19,7 @@ COMMANDS_DIR="$CLAUDE_DIR/commands"
 
 # ディレクトリ作成と初期ファイル生成
 initialize() {
-    mkdir -p "$LOG_DIR" "$FULL_TEXT_DIR"
+    mkdir -p "$FULL_TEXT_DIR"
     # v10.0 新規ディレクトリ作成
     mkdir -p "$ENGINES_DIR" "$COMMANDS_DIR"
 
@@ -40,36 +39,11 @@ create_claude_md() {
     fi
 }
 
-# INPUTファイル作成（v7.0互換）
-create_input_files() {
-    if [ ! -f "ERROR_INPUT.txt" ]; then
-        echo "# エラーをここに貼り付けて「エラー出た」" > ERROR_INPUT.txt
-    fi
-
-    if [ ! -f "SPEC_INPUT.txt" ]; then
-        echo "# 仕様をここに記載して「仕様を固めよう」" > SPEC_INPUT.txt
-    fi
-
-    if [ ! -f "TASK_LIST.md" ]; then
-        cat > "TASK_LIST.md" << 'EOF'
-# タスクリスト
-
-## 分析結果
-（分析モードで作成されたタスクを記載）
-
-### 実装タスク
-- [ ] タスク1
-- [ ] タスク2
-- [ ] タスク3
-EOF
-    fi
-}
-
 # エンジンプロファイル自動生成（v10.2 新規）
 create_engine_profiles() {
     # claude-sonnet.profile
     if [ ! -f "$ENGINES_DIR/claude-sonnet.profile" ]; then
-        echo "claude-sonnet-4-20250514" > "$ENGINES_DIR/claude-sonnet.profile"
+        echo "claude-sonnet-4-5-20250929" > "$ENGINES_DIR/claude-sonnet.profile"
         echo "✅ 生成: claude-sonnet.profile"
     fi
 
@@ -197,7 +171,6 @@ main() {
     # 初期化
     initialize
     create_claude_md
-    create_input_files
 
     # 認証方式選択（v10.3: 新規追加）
     select_auth_mode

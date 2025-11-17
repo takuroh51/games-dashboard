@@ -1,49 +1,29 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-.venv/
-*.egg-info/
+# Claude Code セッションログ（大容量ファイル）
+.claude/full_text_logs/
 
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# Next.js
-frontend/.next/
-frontend/out/
-frontend/.swc/
+# ログファイル
+*.log
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# 一時ファイル
+*.tmp
+*.temp
+*~
 
-# Firebase
-firebase-service-account.json
+# バックアップファイル
+*.backup
+*.bak
 
-# Google Analytics 4
-scripts/ga4-credentials.json
-scripts/*-credentials.json
-
-# IDE
+# エディタ関連
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
-# OS
-.DS_Store
+# OS生成ファイル
 Thumbs.db
-
-# Data (except committed dashboard data)
-public/data/raw_data.json
+Desktop.ini
