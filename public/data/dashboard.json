@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-18T12:24:52.799431",
+  "lastUpdated": "2025-11-18T13:26:59.603422",
   "kpi": {
-    "totalUsers": 4840,
-    "totalLaunches": 11272,
-    "totalPlays": 31938,
-    "averageScore": 55970.0
+    "totalUsers": 4842,
+    "totalLaunches": 11275,
+    "totalPlays": 31945,
+    "averageScore": 55962.23
   },
   "dailyActiveUsers": [
     {
@@ -145,32 +145,32 @@
     },
     {
       "date": "2025-11-18",
-      "users": 64
+      "users": 67
     }
   ],
   "characterDistribution": {
-    "Daia": 13744,
-    "Hikaru": 6763,
-    "Seika": 11428
+    "Daia": 13748,
+    "Hikaru": 6765,
+    "Seika": 11429
   },
   "difficultyDistribution": {
-    "Normal": 13976,
-    "Easy": 7596,
-    "Hard": 10363
+    "Normal": 13978,
+    "Easy": 7599,
+    "Hard": 10365
   },
   "clearRankDistribution": {
-    "A": 11426,
+    "A": 11428,
     "D": 676,
     "MM": 3197,
     "MMM": 627,
-    "M": 6261,
-    "B": 6773,
-    "C": 2961,
+    "M": 6262,
+    "B": 6774,
+    "C": 2964,
     "None": 14
   },
   "languageDistribution": {
     "en": 1442,
-    "jp": 627,
+    "jp": 628,
     "ko": 211,
     "por": 1,
     "zh-TW": 187,
@@ -183,7 +183,7 @@
     "totalSkipButtonPresses": 12216
   },
   "excludedDataStats": {
-    "totalCount": 219618,
+    "totalCount": 219665,
     "excludedCount": 511,
     "excludedRate": 0.23
   },
@@ -213,12 +213,68 @@
       "clearType": "FullCombo"
     },
     {
+      "timestamp": "2025-11-18-12-44-38-905",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 15450,
+      "clearRank": "C",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-18-12-39-49-185",
+      "character": "Daia",
+      "difficulty": "Normal",
+      "score": 15000,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-18-12-38-25-500",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 12300,
+      "clearRank": "C",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-18-12-37-04-788",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 16050,
+      "clearRank": "M",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-18-12-31-27-067",
+      "character": "Seika",
+      "difficulty": "Normal",
+      "score": 11850,
+      "clearRank": "C",
+      "clearType": "Failed"
+    },
+    {
+      "timestamp": "2025-11-18-12-29-23-123",
+      "character": "Hikaru",
+      "difficulty": "Hard",
+      "score": 32300,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
+    {
       "timestamp": "2025-11-18-12-28-57-683",
       "character": "Seika",
       "difficulty": "Normal",
       "score": 11850,
       "clearRank": "C",
       "clearType": "Failed"
+    },
+    {
+      "timestamp": "2025-11-18-12-25-03-093",
+      "character": "Hikaru",
+      "difficulty": "Hard",
+      "score": 40750,
+      "clearRank": "A",
+      "clearType": "Clear"
     },
     {
       "timestamp": "2025-11-18-12-24-14-203",
@@ -4131,71 +4187,15 @@
       "score": 15600,
       "clearRank": "C",
       "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-17-13-22-36-114",
-      "character": "Seika",
-      "difficulty": "Easy",
-      "score": 9100,
-      "clearRank": "M",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-17-13-18-56-756",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 12300,
-      "clearRank": "C",
-      "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-17-13-13-58-637",
-      "character": "Daia",
-      "difficulty": "Easy",
-      "score": 18650,
-      "clearRank": "B",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-17-13-09-17-176",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 13950,
-      "clearRank": "B",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-17-13-07-01-180",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 13500,
-      "clearRank": "B",
-      "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-17-13-06-23-778",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 24850,
-      "clearRank": "B",
-      "clearType": "Clear"
-    },
-    {
-      "timestamp": "2025-11-17-13-05-24-834",
-      "character": "Seika",
-      "difficulty": "Easy",
-      "score": 3450,
-      "clearRank": "C",
-      "clearType": "Failed"
     }
   ],
   "songPlaysByDifficulty": [
     {
       "songId": "D01ihuu",
-      "easy": 1084,
-      "normal": 1372,
+      "easy": 1086,
+      "normal": 1373,
       "hard": 1259,
-      "total": 3715
+      "total": 3718
     },
     {
       "songId": "S01suyo",
@@ -4206,10 +4206,10 @@
     },
     {
       "songId": "D02krmi",
-      "easy": 543,
+      "easy": 544,
       "normal": 917,
       "hard": 720,
-      "total": 2180
+      "total": 2181
     },
     {
       "songId": "H01uiri",
@@ -4236,8 +4236,8 @@
       "songId": "D04angr",
       "easy": 354,
       "normal": 816,
-      "hard": 334,
-      "total": 1504
+      "hard": 335,
+      "total": 1505
     },
     {
       "songId": "S03unmi",
@@ -4333,18 +4333,18 @@
   ],
   "playerClearRateDistribution": {
     "distribution": {
-      "0%": 570,
+      "0%": 569,
       "1-19%": 11,
       "20-39%": 166,
-      "40-59%": 369,
+      "40-59%": 370,
       "60-79%": 570,
       "80-99%": 786,
-      "100%": 1268
+      "100%": 1269
     },
     "stats": {
-      "mean": 69.28,
+      "mean": 69.3,
       "median": 83.33,
-      "totalPlayers": 3740
+      "totalPlayers": 3741
     }
   },
   "playClearRateDistribution": {
@@ -4353,14 +4353,14 @@
       "1-19%": 36,
       "20-39%": 125,
       "40-59%": 1079,
-      "60-79%": 9475,
-      "80-99%": 21066,
+      "60-79%": 9480,
+      "80-99%": 21068,
       "100%": 108
     },
     "stats": {
-      "mean": 82.31,
-      "median": 84.0,
-      "totalPlays": 31920
+      "mean": 82.3,
+      "median": 84,
+      "totalPlays": 31927
     }
   },
   "ga4": {
