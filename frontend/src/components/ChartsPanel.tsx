@@ -475,7 +475,7 @@ export default function ChartsPanel({
                   }
                 }
               }}
-              height={costumeDistribution.length * 30}
+              height={costumeDistribution.length * 40}
             />
           </div>
         </div>
