@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-11-19T15:09:56.713506",
+  "lastUpdated": "2025-11-19T15:14:40.970276",
   "kpi": {
     "totalUsers": 4959,
     "totalLaunches": 11629,
-    "totalPlays": 32755,
-    "averageScore": 55054.2
+    "totalPlays": 32759,
+    "averageScore": 55049.58
   },
   "dailyActiveUsers": [
     {
@@ -153,27 +153,27 @@
     }
   ],
   "characterDistribution": {
-    "Daia": 14145,
-    "Hikaru": 6918,
+    "Daia": 14148,
+    "Hikaru": 6919,
     "Seika": 11689
   },
   "difficultyDistribution": {
     "Normal": 14340,
-    "Easy": 7793,
-    "Hard": 10619
+    "Easy": 7795,
+    "Hard": 10621
   },
   "clearRankDistribution": {
-    "A": 11710,
-    "D": 704,
-    "MM": 3242,
+    "A": 11711,
+    "D": 705,
+    "MM": 3243,
     "MMM": 653,
     "M": 6360,
-    "B": 6995,
+    "B": 6996,
     "C": 3071,
     "None": 17
   },
   "languageDistribution": {
-    "en": 1499,
+    "en": 1500,
     "jp": 630,
     "ko": 213,
     "zh-TW": 191,
@@ -181,16 +181,48 @@
   },
   "cutsceneSkipRate": {
     "totalStart": 4374,
-    "totalSkip": 2037,
-    "skipRate": 46.57,
-    "totalSkipButtonPresses": 12598
+    "totalSkip": 2038,
+    "skipRate": 46.59,
+    "totalSkipButtonPresses": 12600
   },
   "excludedDataStats": {
-    "totalCount": 225703,
+    "totalCount": 225746,
     "excludedCount": 667,
     "excludedRate": 0.3
   },
   "recentPlays": [
+    {
+      "timestamp": "2025-11-19-15-13-41-706",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 21300,
+      "clearRank": "MM",
+      "clearType": "FullCombo"
+    },
+    {
+      "timestamp": "2025-11-19-15-12-46-863",
+      "character": "Daia",
+      "difficulty": "Easy",
+      "score": 19450,
+      "clearRank": "A",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-19-15-11-06-668",
+      "character": "Hikaru",
+      "difficulty": "Easy",
+      "score": 13550,
+      "clearRank": "B",
+      "clearType": "Clear"
+    },
+    {
+      "timestamp": "2025-11-19-15-09-53-255",
+      "character": "Daia",
+      "difficulty": "Hard",
+      "score": 14650,
+      "clearRank": "D",
+      "clearType": "Failed"
+    },
     {
       "timestamp": "2025-11-19-15-09-26-313",
       "character": "Daia",
@@ -4158,38 +4190,6 @@
       "score": 13700,
       "clearRank": "B",
       "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-18-23-17-53-481",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 14450,
-      "clearRank": "A",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-18-23-17-29-995",
-      "character": "Seika",
-      "difficulty": "Normal",
-      "score": 27000,
-      "clearRank": "MM",
-      "clearType": "FullCombo"
-    },
-    {
-      "timestamp": "2025-11-18-23-15-40-386",
-      "character": "Daia",
-      "difficulty": "Normal",
-      "score": 17550,
-      "clearRank": "C",
-      "clearType": "Failed"
-    },
-    {
-      "timestamp": "2025-11-18-23-14-25-129",
-      "character": "Daia",
-      "difficulty": "Easy",
-      "score": 15000,
-      "clearRank": "A",
-      "clearType": "Clear"
     }
   ],
   "songPlaysByDifficulty": [
@@ -4279,10 +4279,10 @@
     },
     {
       "songId": "H04hiso",
-      "easy": 234,
+      "easy": 235,
       "normal": 641,
       "hard": 209,
-      "total": 1084
+      "total": 1085
     },
     {
       "songId": "Allkank",
@@ -4345,7 +4345,7 @@
       "100%": 1290
     },
     "stats": {
-      "mean": 69.0,
+      "mean": 69.01,
       "median": 83.33,
       "totalPlayers": 3842
     }
@@ -4355,22 +4355,22 @@
       "0%": 34,
       "1-19%": 36,
       "20-39%": 130,
-      "40-59%": 1127,
-      "60-79%": 9802,
-      "80-99%": 21496,
+      "40-59%": 1128,
+      "60-79%": 9804,
+      "80-99%": 21497,
       "100%": 112
     },
     "stats": {
-      "mean": 82.22,
+      "mean": 82.21,
       "median": 84,
-      "totalPlays": 32737
+      "totalPlays": 32741
     }
   },
   "platformDistribution": [
     {
       "platform": "PC - Steam",
-      "plays": 10,
-      "users": 2
+      "plays": 11,
+      "users": 3
     }
   ],
   "costumeDistribution": [
@@ -4385,6 +4385,10 @@
     {
       "costume": "GirlSettings_Hikaru_60D",
       "plays": 1
+    },
+    {
+      "costume": "GirlSettings_Daia_30D",
+      "plays": 1
     }
   ],
   "platformCostumeCross": [
@@ -4393,7 +4397,8 @@
       "GirlSettings_Hikaru_60D": 1,
       "GirlSettings_Hikaru_Default": 7,
       "GirlSettings_Seika_30D": 2,
-      "total": 10
+      "GirlSettings_Daia_30D": 1,
+      "total": 11
     }
   ],
   "ga4": {
