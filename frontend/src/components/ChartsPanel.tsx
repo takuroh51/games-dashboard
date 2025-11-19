@@ -448,6 +448,11 @@ export default function ChartsPanel({
                 indexAxis: 'y' as const,
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                  padding: {
+                    left: 20
+                  }
+                },
                 plugins: {
                   legend: {
                     display: false
@@ -459,6 +464,14 @@ export default function ChartsPanel({
                 scales: {
                   x: {
                     beginAtZero: true
+                  },
+                  y: {
+                    ticks: {
+                      autoSkip: false,
+                      font: {
+                        size: 11
+                      }
+                    }
                   }
                 }
               }}
