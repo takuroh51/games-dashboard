@@ -503,6 +503,101 @@ def calculate_play_clear_rate_distribution(users_data):
     }
 
 
+def calculate_platform_distribution(users_data):
+    """Platform別の統計を計算"""
+    platform_plays = Counter()
+    platform_users = defaultdict(set)
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        if not isinstance(results, dict):
+            continue
+
+        for result_id, result_data in results.items():
+            if not isinstance(result_data, dict):
+                continue
+
+            platform = result_data.get('platform')
+            if platform:
+                platform_plays[platform] += 1
+                platform_users[platform].add(user_id)
+
+    # 分布データを作成
+    distribution = []
+    for platform, plays in platform_plays.most_common():
+        distribution.append({
+            'platform': platform,
+            'plays': plays,
+            'users': len(platform_users[platform])
+        })
+
+    return distribution
+
+
+def calculate_costume_distribution(users_data):
+    """Costume別の統計を計算"""
+    costume_plays = Counter()
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        if not isinstance(results, dict):
+            continue
+
+        for result_id, result_data in results.items():
+            if not isinstance(result_data, dict):
+                continue
+
+            costume = result_data.get('costume')
+            if costume:
+                costume_plays[costume] += 1
+
+    # 分布データを作成（Top 20）
+    distribution = []
+    for costume, plays in costume_plays.most_common(20):
+        distribution.append({
+            'costume': costume,
+            'plays': plays
+        })
+
+    return distribution
+
+
+def calculate_platform_costume_cross(users_data):
+    """Platform × Costume のクロス集計"""
+    cross_data = defaultdict(lambda: defaultdict(int))
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        if not isinstance(results, dict):
+            continue
+
+        for result_id, result_data in results.items():
+            if not isinstance(result_data, dict):
+                continue
+
+            platform = result_data.get('platform')
+            costume = result_data.get('costume')
+
+            if platform and costume:
+                cross_data[platform][costume] += 1
+
+    # テーブル形式に変換
+    table = []
+    for platform, costumes in cross_data.items():
+        row = {'platform': platform}
+        total = 0
+        for costume, count in costumes.items():
+            row[costume] = count
+            total += count
+        row['total'] = total
+        table.append(row)
+
+    # 合計でソート
+    table.sort(key=lambda x: x['total'], reverse=True)
+
+    return table
+
+
 def aggregate_dashboard_data(users_data, ga4_data=None):
     """全ての集計を実行してダッシュボード用データを生成"""
     print("=" * 60)
@@ -522,7 +617,10 @@ def aggregate_dashboard_data(users_data, ga4_data=None):
         'recentPlays': get_recent_plays(users_data),
         'songPlaysByDifficulty': calculate_song_plays_by_difficulty(users_data),
         'playerClearRateDistribution': calculate_player_clear_rate_distribution(users_data),
-        'playClearRateDistribution': calculate_play_clear_rate_distribution(users_data)
+        'playClearRateDistribution': calculate_play_clear_rate_distribution(users_data),
+        'platformDistribution': calculate_platform_distribution(users_data),
+        'costumeDistribution': calculate_costume_distribution(users_data),
+        'platformCostumeCross': calculate_platform_costume_cross(users_data)
     }
 
     # GA4データを統合
@@ -548,6 +646,9 @@ def aggregate_dashboard_data(users_data, ga4_data=None):
     print("✅ Song plays by difficulty calculated")
     print("✅ Player clear rate distribution calculated")
     print("✅ Play clear rate distribution calculated")
+    print("✅ Platform distribution calculated")
+    print("✅ Costume distribution calculated")
+    print("✅ Platform × Costume cross calculated")
     if ga4_data:
         print("✅ GA4 data integrated")
 

@@ -3,7 +3,7 @@
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { Line, Pie, Bar } from 'react-chartjs-2'
-import type { DailyActiveUser, PlayerClearRateDistribution, PlayClearRateDistribution, GA4DailyMetric, GA4LanguageDistribution, GA4GuidelineMonthlyStats } from '@/types/dashboard'
+import type { DailyActiveUser, PlayerClearRateDistribution, PlayClearRateDistribution, GA4DailyMetric, GA4LanguageDistribution, GA4GuidelineMonthlyStats, PlatformDistribution, CostumeDistribution, PlatformCostumeCross } from '@/types/dashboard'
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ChartDataLabels)
 
@@ -15,6 +15,9 @@ interface ChartsPanelProps {
   languageDistribution: Record<string, number>
   playerClearRateDistribution?: PlayerClearRateDistribution
   playClearRateDistribution?: PlayClearRateDistribution
+  platformDistribution?: PlatformDistribution[]
+  costumeDistribution?: CostumeDistribution[]
+  platformCostumeCross?: PlatformCostumeCross[]
   ga4DailyMetrics?: GA4DailyMetric[]
   ga4LanguageDistribution?: GA4LanguageDistribution[]
   ga4GuidelineMonthlyStats?: GA4GuidelineMonthlyStats[]
@@ -29,6 +32,9 @@ export default function ChartsPanel({
   languageDistribution,
   playerClearRateDistribution,
   playClearRateDistribution,
+  platformDistribution,
+  costumeDistribution,
+  platformCostumeCross,
   ga4DailyMetrics,
   ga4LanguageDistribution,
   ga4GuidelineMonthlyStats,
@@ -377,6 +383,143 @@ export default function ChartsPanel({
                         <td className="px-4 py-2 text-right">{stat.pt || '-'}</td>
                         <td className="px-4 py-2 text-right">{stat.ru || '-'}</td>
                         <td className="px-4 py-2 text-right font-bold">{total}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Platform統計 */}
+      {platformDistribution && platformDistribution.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+            <span className="mr-2">💻</span> Platform別統計
+          </h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm text-gray-900 dark:text-white">
+                <thead className="bg-gray-100 dark:bg-gray-700">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Platform</th>
+                    <th className="px-4 py-2 text-right font-semibold">プレイ回数</th>
+                    <th className="px-4 py-2 text-right font-semibold">ユーザー数</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {platformDistribution.map((item, index) => (
+                    <tr key={index} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
+                      <td className="px-4 py-2 font-medium">{item.platform}</td>
+                      <td className="px-4 py-2 text-right">{item.plays.toLocaleString()}</td>
+                      <td className="px-4 py-2 text-right">{item.users.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Costume統計 */}
+      {costumeDistribution && costumeDistribution.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+            <span className="mr-2">👗</span> Costume別プレイ回数（Top 20）
+          </h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+            <Bar
+              data={{
+                labels: costumeDistribution.map(item => item.costume),
+                datasets: [
+                  {
+                    label: 'プレイ回数',
+                    data: costumeDistribution.map(item => item.plays),
+                    backgroundColor: 'rgba(236, 72, 153, 0.7)',
+                    borderColor: 'rgb(236, 72, 153)',
+                    borderWidth: 1
+                  }
+                ]
+              }}
+              options={{
+                indexAxis: 'y' as const,
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    display: false
+                  },
+                  datalabels: {
+                    display: false
+                  }
+                },
+                scales: {
+                  x: {
+                    beginAtZero: true
+                  }
+                }
+              }}
+              height={costumeDistribution.length * 30}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Platform × Costume クロス集計 */}
+      {platformCostumeCross && platformCostumeCross.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+            <span className="mr-2">🔀</span> Platform × Costume クロス集計
+          </h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm text-gray-900 dark:text-white">
+                <thead className="bg-gray-100 dark:bg-gray-700">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Platform</th>
+                    {/* 全てのコスチューム名を抽出 */}
+                    {(() => {
+                      const allCostumes = new Set<string>()
+                      platformCostumeCross.forEach(row => {
+                        Object.keys(row).forEach(key => {
+                          if (key !== 'platform' && key !== 'total') {
+                            allCostumes.add(key)
+                          }
+                        })
+                      })
+                      return Array.from(allCostumes).map(costume => (
+                        <th key={costume} className="px-4 py-2 text-right font-semibold text-xs">
+                          {costume}
+                        </th>
+                      ))
+                    })()}
+                    <th className="px-4 py-2 text-right font-semibold bg-blue-100 dark:bg-blue-900">合計</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {platformCostumeCross.map((row, index) => {
+                    const allCostumes = new Set<string>()
+                    platformCostumeCross.forEach(r => {
+                      Object.keys(r).forEach(key => {
+                        if (key !== 'platform' && key !== 'total') {
+                          allCostumes.add(key)
+                        }
+                      })
+                    })
+                    return (
+                      <tr key={index} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
+                        <td className="px-4 py-2 font-medium">{row.platform}</td>
+                        {Array.from(allCostumes).map(costume => (
+                          <td key={costume} className="px-4 py-2 text-right">
+                            {(row[costume] as number) || '-'}
+                          </td>
+                        ))}
+                        <td className="px-4 py-2 text-right font-bold bg-blue-50 dark:bg-blue-950">
+                          {row.total}
+                        </td>
                       </tr>
                     )
                   })}

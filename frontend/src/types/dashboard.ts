@@ -12,6 +12,9 @@ export interface DashboardData {
   songPlaysByDifficulty: SongPlayByDifficulty[];
   playerClearRateDistribution?: PlayerClearRateDistribution;
   playClearRateDistribution?: PlayClearRateDistribution;
+  platformDistribution?: PlatformDistribution[];
+  costumeDistribution?: CostumeDistribution[];
+  platformCostumeCross?: PlatformCostumeCross[];
   ga4?: GA4Data;
 }
 
@@ -111,4 +114,21 @@ export interface GA4GuidelineMonthlyStats {
   es?: number;
   pt?: number;
   ru?: number;
+}
+
+export interface PlatformDistribution {
+  platform: string;
+  plays: number;
+  users: number;
+}
+
+export interface CostumeDistribution {
+  costume: string;
+  plays: number;
+}
+
+export interface PlatformCostumeCross {
+  platform: string;
+  total: number;
+  [costume: string]: number | string;
 }

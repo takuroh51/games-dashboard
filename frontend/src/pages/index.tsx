@@ -184,6 +184,9 @@ export default function Home() {
             languageDistribution={data.languageDistribution}
             playerClearRateDistribution={data.playerClearRateDistribution}
             playClearRateDistribution={data.playClearRateDistribution}
+            platformDistribution={data.platformDistribution}
+            costumeDistribution={data.costumeDistribution}
+            platformCostumeCross={data.platformCostumeCross}
             ga4DailyMetrics={data.ga4?.dailyMetrics}
             ga4LanguageDistribution={data.ga4?.languageDistribution}
             ga4GuidelineMonthlyStats={data.ga4?.guidelineMonthlyStats}
