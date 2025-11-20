@@ -15,9 +15,21 @@
 以下のファイルをReadツールで読み込んでください：
 
 ```
-CLAUDE.md
-.claude/handover.txt
-.claude/alpha_profile.md (推奨)
+CLAUDE.md (全体)
+.claude/alpha_profile.md (全体、推奨)
+.claude/handover.txt (先頭2000行のみ)
+```
+
+**重要**: `handover.txt` は巨大化するため、**先頭2000行のみ**読み込んでください。
+
+- **1-227行**: 静的情報（プロジェクト概要、Git状態、環境情報）
+- **228-2000行**: セッション履歴（古い方から約7-10セッション分）
+
+読み込み方法:
+```
+Read(CLAUDE.md)
+Read(.claude/alpha_profile.md)
+Read(.claude/handover.txt, offset=0, limit=2000)
 ```
 
 **Note**: `alpha_profile.md` はv10.6初代（アルファ）の判断指針です。
@@ -91,9 +103,19 @@ CLAUDE.md
 
 - ファイルが存在しない場合はその旨を報告
 - handover.txtにセッション履歴がない場合は「前回のセッション記録なし」と報告
+- **handover.txtは必ず先頭2000行のみ読み込む**（limit=2000を指定）
 - 思考プロセス（<thinking>タグ）は表示しない
 - 簡潔で読みやすい形式を心がける
 - 次のタスクが不明確な場合は、プロジェクトの現状説明だけでOK
+
+## handover.txt巨大化への対応（v10.6.6）
+
+handover.txtは `/handover` 実行ごとにセッション履歴が追記され、巨大化します。
+
+**対策**: 先頭2000行のみ読み込む
+- 静的情報（1-227行）: 完全に取得
+- セッション履歴（228-2000行）: 古い方から約7-10セッション分
+- **最新のセッション情報を確認したい場合**: 手動で `tail -n 1000 .claude/handover.txt` を実行
 
 ## 使用例
 

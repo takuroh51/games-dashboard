@@ -230,16 +230,28 @@ EOF
             local log_size=$(ls -lh "$latest_log" | awk '{print $5}')
             local log_date=$(ls -l "$latest_log" | awk '{print $6, $7, $8}')
 
+            # セッションログをクリーニング（v10.6.5+）
+            local clean_log="${latest_log%.txt}_clean.txt"
+            if [ -f "$CLAUDE_DIR/clean_session_log.sh" ]; then
+                # クリーニングスクリプト実行（出力は抑制）
+                bash "$CLAUDE_DIR/clean_session_log.sh" "$latest_log" "$clean_log" >/dev/null 2>&1 || true
+            fi
+
             cat << EOF
 ## 📝 最新セッションログ
 - **ファイル**: \`$log_name\`
 - **サイズ**: $log_size
 - **最終更新**: $log_date
 
-### セッション概要（末尾50行）
+### セッション概要（クリーン版・末尾200行）
 \`\`\`
 EOF
-            tail -50 "$latest_log" 2>/dev/null | head -30
+            # クリーンログがあればそれを使用、なければ元のログ
+            if [ -f "$clean_log" ]; then
+                tail -200 "$clean_log" 2>/dev/null | head -100
+            else
+                tail -50 "$latest_log" 2>/dev/null | head -30
+            fi
             echo '```'
         fi
     fi
@@ -438,6 +450,95 @@ apply_summarization() {
 }
 
 # セッション履歴要約機能（v10.6.5 - 段階的圧縮）
+# セッションログ差分解析（v10.6.6 - 行番号システム）
+analyze_session_log_incremental() {
+    local state_file="$CLAUDE_DIR/handover_state.txt"
+    local session_log_dir="$CLAUDE_DIR/full_text_logs"
+
+    # セッションログディレクトリが存在しない場合はスキップ
+    if [ ! -d "$session_log_dir" ]; then
+        log_info "セッションログディレクトリが見つかりません。スキップします。"
+        return 0
+    fi
+
+    # 最新のセッションログを特定
+    local latest_log=$(ls -t "$session_log_dir"/session_*.txt 2>/dev/null | head -1)
+    if [ -z "$latest_log" ]; then
+        log_info "セッションログが見つかりません。スキップします。"
+        return 0
+    fi
+
+    log_info "セッションログ差分解析を開始..."
+    log_info "ログファイル: $(basename "$latest_log")"
+
+    # 前回処理済み行番号を読み込み（ファイル名:行番号 形式）
+    local last_processed_line=0
+    local last_processed_file=""
+    if [ -f "$state_file" ]; then
+        last_processed_file=$(head -1 "$state_file" | cut -d':' -f1)
+        last_processed_line=$(head -1 "$state_file" | cut -d':' -f2)
+    fi
+
+    # 現在のログファイル名
+    local current_file=$(basename "$latest_log")
+
+    # ファイルが変わった場合（新しいセッション）は0からスタート
+    if [ "$last_processed_file" != "$current_file" ]; then
+        log_info "新しいセッションログを検出: $current_file"
+        last_processed_line=0
+    fi
+
+    # 現在の総行数
+    local total_lines=$(wc -l < "$latest_log")
+    local new_lines=$((total_lines - last_processed_line))
+
+    log_info "前回処理: $last_processed_line 行"
+    log_info "現在の総行数: $total_lines 行"
+    log_info "新規追加: $new_lines 行"
+
+    # 新しい行がない場合はスキップ
+    if [ "$new_lines" -le 0 ]; then
+        log_info "新しいログがありません。スキップします。"
+        return 0
+    fi
+
+    # 差分が大きすぎる場合は警告
+    if [ "$new_lines" -gt 50000 ]; then
+        log_warning "差分が $new_lines 行と非常に大きいです。"
+        log_warning "自動解析は困難なため、手動要約を推奨します。"
+        echo ""
+        echo "💡 推奨アクション:"
+        echo "  1. このセッションを終了"
+        echo "  2. handover.txt に手動で要約を追記"
+        echo "  3. 次回から1-2時間ごとに /handover 実行"
+        echo ""
+        # 状態ファイルを更新（次回からは全体を処理しない）
+        echo "$current_file:$total_lines" > "$state_file"
+        return 0
+    fi
+
+    log_info "差分解析を Claude Code に依頼します..."
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "📋 Claude Code への依頼"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "以下のコマンドをClaude Codeで実行して、セッション記録を追記してください："
+    echo ""
+    echo "  tail -n $new_lines \"$latest_log\" > /tmp/session_diff.txt"
+    echo ""
+    echo "そして、/tmp/session_diff.txt の内容を解析して、"
+    echo "handover.txt の「# 📚 セッション履歴」セクションに追記してください。"
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+
+    # 状態ファイルを更新
+    echo "$current_file:$total_lines" > "$state_file"
+    log_success "状態ファイルを更新しました: $current_file:$total_lines"
+    echo ""
+}
+
 summarize_old_sessions() {
     # LINE_THRESHOLD と SUMMARY_LINES は環境変数として main から受け取る
 
@@ -534,7 +635,7 @@ main() {
     echo ""
     echo "╔════════════════════════════════════════════════════╗"
     echo "║           引き継ぎファイル自動生成               ║"
-    echo "║            Claude Wrapper v10.2                  ║"
+    echo "║            Claude Wrapper v10.6.5                ║"
     echo "╚════════════════════════════════════════════════════╝"
     echo ""
 
@@ -660,6 +761,9 @@ EOF
         log_warning "gitリポジトリではありません。gitコミットをスキップします。"
     fi
     echo ""
+
+    # セッションログ差分解析（v10.6.6 - 行番号システム）
+    analyze_session_log_incremental
 
     # セッション履歴要約チェック（v10.6.5 - 段階的圧縮）
     if [ "$ENABLE_SUMMARIZE" = true ]; then

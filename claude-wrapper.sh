@@ -1,10 +1,10 @@
 #!/bin/bash
 # claude-wrapper.sh - 会話型ゲーム開発エンジン
-# Version: 10.6.4 - Practical Distributed Agent System + AI Personality Continuity + Git-Safe Handover Summarization
+# Version: 10.6.7 - Emergency Handover + Startup Optimization
 # Purpose: 分散並列エージェント駆動 + AI人格継承 + 実用最優先 + Git完全版保存 + handover自動要約 + 具体的プロジェクト開発加速
 
 # 設定
-SCRIPT_VERSION="10.6.4"
+SCRIPT_VERSION="10.6.7"
 PROJECT_DIR="$(pwd)"
 PROJECT_NAME=$(basename "$PROJECT_DIR")
 CLAUDE_DIR=".claude"
@@ -17,6 +17,11 @@ SESSION_ID="$(date +%Y%m%d_%H%M)"
 ENGINES_DIR="$CLAUDE_DIR/engines"
 COMMANDS_DIR="$CLAUDE_DIR/commands"
 
+# v10.6.6 新規: トークンモニタリング
+TOKEN_MONITOR_SCRIPT="$ENGINES_DIR/token_monitor.sh"
+TOKEN_COUNT_FILE="$CLAUDE_DIR/token_count.txt"
+MONITOR_PID_FILE="$CLAUDE_DIR/token_monitor.pid"
+
 # ディレクトリ作成と初期ファイル生成
 initialize() {
     mkdir -p "$FULL_TEXT_DIR"
@@ -26,7 +31,11 @@ initialize() {
     # v10.2 自動生成機能
     create_engine_profiles
     create_handover_template
-    create_handover_command
+
+    # v10.6.6: トークンカウント初期化
+    if [ ! -f "$TOKEN_COUNT_FILE" ]; then
+        echo '{"used_tokens":0,"max_tokens":200000,"remaining_tokens":200000,"remaining_percent":100,"last_updated":"N/A"}' > "$TOKEN_COUNT_FILE"
+    fi
 }
 
 # CLAUDE.md テンプレート確認（簡素版）
@@ -80,49 +89,6 @@ EOF
     fi
 }
 
-# handover slash command作成（v10.2 新規）
-create_handover_command() {
-    # 軽量版: handover.md（日常的なセッション引き継ぎ用）
-    if [ ! -f "$COMMANDS_DIR/handover.md" ]; then
-        cat > "$COMMANDS_DIR/handover.md" << 'EOF'
-# セッション引き継ぎ（軽量版）
-
-このセッションの作業内容と次回予定を `.claude/handover.txt` に簡潔に記録してください。
-
-## 実行指示（重要）
-
-**このコマンドは軽量・高速実行版です:**
-- 思考プロセス（<thinking>タグ）を表示しない
-- ファイル読み込みは最小限（TASK_LIST.md のみ）
-- 詳細な分析は不要、結果だけを簡潔に記録
-- 30秒以内で完了すること
-
-## 記録内容
-
-1. **本セッションの実施内容**
-   - 完了したタスク
-   - 変更したファイル（主要なもののみ）
-
-2. **発見事項・注意点**
-   - 気づいたこと
-   - 重要な決定事項
-
-3. **次回セッション予定**
-   - 残タスク
-   - 次にやること
-
-4. **即座に対応すべき課題**
-   - あれば記載、なければスキップ
-
-## 出力形式
-
-- **サイズ**: 10〜30行程度の簡潔な記録
-- **形式**: Markdown形式
-EOF
-        echo "✅ 生成: .claude/commands/handover.md"
-    fi
-}
-
 
 # 動作モードプロンプト（簡素版）
 show_mode_prompt() {
@@ -159,7 +125,7 @@ EOF
 main() {
     clear
     echo "╔════════════════════════════════════════════════════╗"
-    echo "║    会話型ゲーム開発エンジン v10.6.4              ║"
+    echo "║    会話型ゲーム開発エンジン v10.6.6              ║"
     echo "║    - 分散並列エージェント + AI人格継承            ║"
     echo "╠════════════════════════════════════════════════════╣"
     echo "║ Project: $PROJECT_NAME"
@@ -180,23 +146,6 @@ main() {
         select_engine
     fi
 
-    # CLAUDE.md読み込み
-    echo "📋 開発憲法を読み込み中..."
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    cat "CLAUDE.md"
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo ""
-    
-    # 引き継ぎファイル（あれば）
-    if [ -f "$HANDOVER_FILE" ]; then
-        echo "📋 前回の引き継ぎ"
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        cat "$HANDOVER_FILE"
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        echo ""
-    fi
-    
-    
     # 動作モード表示
     show_mode_prompt
     
@@ -234,6 +183,9 @@ EOF
         exit 1
     fi
 
+    # v10.6.6: トークンモニタ起動
+    start_token_monitor
+
     # Claude起動（ログファイルに記録）
     if [[ "$OSTYPE" == "darwin"* ]]; then
         script -F "$SESSION_FULL_TEXT" claude
@@ -241,8 +193,10 @@ EOF
         script -f "$SESSION_FULL_TEXT" -c "claude"
     fi
 
-    
+
     # 終了処理
+    stop_token_monitor
+
     echo ""
     echo "✅ セッション終了"
     echo ""
@@ -250,6 +204,49 @@ EOF
     echo "   方法1: セッション中に「引き継ぎ文書を作成」"
     echo "   方法2: echo '引き継ぎ内容' > $HANDOVER_FILE"
     echo ""
+}
+
+
+# ============================================================
+# v10.6.6 新機能: トークンモニタリング
+# ============================================================
+
+# トークンモニタを起動
+start_token_monitor() {
+    if [ ! -f "$TOKEN_MONITOR_SCRIPT" ]; then
+        echo "⚠️ トークンモニタスクリプトが見つかりません: $TOKEN_MONITOR_SCRIPT"
+        return
+    fi
+
+    # Python環境チェック
+    if ! command -v python3 &> /dev/null; then
+        echo "⚠️ python3が見つかりません。トークンモニタをスキップします。"
+        return
+    fi
+
+    if ! python3 -c "import tiktoken" 2>/dev/null; then
+        echo "⚠️ tiktokenがインストールされていません。トークンモニタをスキップします。"
+        echo "   インストール: pip3 install tiktoken"
+        return
+    fi
+
+    # バックグラウンドでトークンモニタ起動
+    echo "🔄 トークンモニタを起動中..."
+    nohup "$TOKEN_MONITOR_SCRIPT" > "$CLAUDE_DIR/token_monitor.log" 2>&1 &
+    echo $! > "$MONITOR_PID_FILE"
+    echo "✅ トークンモニタ起動 (PID: $(cat "$MONITOR_PID_FILE"))"
+}
+
+# トークンモニタを停止
+stop_token_monitor() {
+    if [ -f "$MONITOR_PID_FILE" ]; then
+        local pid=$(cat "$MONITOR_PID_FILE")
+        if ps -p "$pid" > /dev/null 2>&1; then
+            kill "$pid" 2>/dev/null
+            echo "🛑 トークンモニタ停止 (PID: $pid)"
+        fi
+        rm -f "$MONITOR_PID_FILE"
+    fi
 }
 
 
