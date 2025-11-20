@@ -27,3 +27,12 @@
 # OS生成ファイル
 Thumbs.db
 Desktop.ini
+
+# 認証情報（絶対にコミットしない）
+*credentials*.json
+*.key.json
+.env
+.env.local
+
+# バックアップデータ（個人情報含む）
+backups/
