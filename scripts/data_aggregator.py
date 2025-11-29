@@ -377,6 +377,43 @@ def calculate_song_plays_by_difficulty(users_data):
     return sorted_stats
 
 
+def calculate_song_play_counts_by_difficulty(users_data):
+    """楽曲別・難易度別のプレイ累計回数を集計"""
+    song_difficulty_counts = defaultdict(lambda: defaultdict(int))
+
+    for user_id, user_data in users_data.items():
+        results = user_data.get('results', {})
+        if isinstance(results, dict):
+            for result_id, result_data in results.items():
+                if isinstance(result_data, dict):
+                    game_type = result_data.get('gameType')
+                    difficulty = result_data.get('difficulty')
+
+                    if game_type and difficulty:
+                        song_difficulty_counts[game_type][difficulty] += 1
+
+    # データを整形してリスト化
+    song_stats = []
+    for game_type, difficulties in song_difficulty_counts.items():
+        easy_count = difficulties.get('Easy', 0)
+        normal_count = difficulties.get('Normal', 0)
+        hard_count = difficulties.get('Hard', 0)
+        total_count = easy_count + normal_count + hard_count
+
+        song_stats.append({
+            'songId': game_type,
+            'easy': easy_count,
+            'normal': normal_count,
+            'hard': hard_count,
+            'total': total_count
+        })
+
+    # 合計プレイ回数でソート（降順）
+    sorted_stats = sorted(song_stats, key=lambda x: x['total'], reverse=True)
+
+    return sorted_stats
+
+
 def calculate_player_clear_rate_distribution(users_data):
     """プレイヤー別クリアレート分布を計算（clearTypeベース）"""
     import statistics
@@ -616,6 +653,7 @@ def aggregate_dashboard_data(users_data, ga4_data=None):
         'excludedDataStats': calculate_excluded_data_stats(users_data),
         'recentPlays': get_recent_plays(users_data),
         'songPlaysByDifficulty': calculate_song_plays_by_difficulty(users_data),
+        'songPlayCountsByDifficulty': calculate_song_play_counts_by_difficulty(users_data),
         'playerClearRateDistribution': calculate_player_clear_rate_distribution(users_data),
         'playClearRateDistribution': calculate_play_clear_rate_distribution(users_data),
         'platformDistribution': calculate_platform_distribution(users_data),
@@ -644,6 +682,7 @@ def aggregate_dashboard_data(users_data, ga4_data=None):
     print("✅ Excluded data stats calculated")
     print("✅ Recent plays extracted")
     print("✅ Song plays by difficulty calculated")
+    print("✅ Song play counts by difficulty calculated")
     print("✅ Player clear rate distribution calculated")
     print("✅ Play clear rate distribution calculated")
     print("✅ Platform distribution calculated")

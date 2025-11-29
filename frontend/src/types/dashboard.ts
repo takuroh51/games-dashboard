@@ -10,6 +10,7 @@ export interface DashboardData {
   excludedDataStats?: ExcludedDataStats;
   recentPlays: RecentPlay[];
   songPlaysByDifficulty: SongPlayByDifficulty[];
+  songPlayCountsByDifficulty: SongPlayByDifficulty[];
   playerClearRateDistribution?: PlayerClearRateDistribution;
   playClearRateDistribution?: PlayClearRateDistribution;
   platformDistribution?: PlatformDistribution[];
